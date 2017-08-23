@@ -1,0 +1,45 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+./idea
+vendor/
+#frontend
+
+# compiled output
+/busfe/dist
+/busfe/tmp
+/busfe/out-tsc
+
+# dependencies
+busfe/node_modules
+
+# IDEs and editors
+/busfe/.idea
+/busfe/.project
+/busfe/.classpath
+/busfe/.c9/
+/busfe/*.launch
+/busfe/.settings/
+/busfe/*.sublime-workspace
+
+# IDE - VSCode
+/busfe/.vscode/*
+/busfe/!.vscode/settings.json
+/busfe/!.vscode/tasks.json
+/busfe/!.vscode/launch.json
+/busfe/!.vscode/extensions.json
+
+# misc
+/busfe/.sass-cache
+/busfe/connect.lock
+/busfe/coverage
+/busfe/libpeerconnection.log
+/busfe/npm-debug.log
+/busfe/testem.log
+/busfe/typings
+
+# e2e
+/busfe/e2e/*.js
+/busfe/e2e/*.map
+
+# System Files
+/busfe/.DS_Store
+/busfe/Thumbs.db
