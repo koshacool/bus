@@ -17,3 +17,6 @@ Route::post('/auth',"AuthController@authenticate");
 Route::get('/auth/refresh',"AuthController@refresh");
 Route::get('/auth/profile',"AuthController@profile");
 
+Route::get('/', function () {
+    return view('index');
+}) -> where('path', '.+');
