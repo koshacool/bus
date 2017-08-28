@@ -20,3 +20,7 @@ Route::get('/auth/profile',"AuthController@profile");
 Route::get('/', function () {
     return view('index');
 }) -> where('path', '.+');
+
+Route::get('admin', function () {
+    return view('index');
+}) -> where('path', '.+');

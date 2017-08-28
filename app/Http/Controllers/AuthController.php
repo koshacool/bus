@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -25,7 +26,7 @@ class AuthController extends Controller
             // something went wrong whilst attempting to encode the token
             return response()->json(['status' => 'error', 'error' => 'could_not_create_token'], 500);
         }
-        Log::info($credentials);
+
         // all good so return the token
         return response()->json(['status' => 'ok', 'token' => $token]);
     }

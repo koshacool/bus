@@ -21,7 +21,7 @@ class Admin
         $user = User::find($userId);
 
         if ($user->role->name !== 'admin') {
-            return response()->json(['error' => 'Ви не маєте прав на перегляд даної сторінки']);;
+            return response()->json(['error' => 'Ви не маєте прав на перегляд даної сторінки']);
         }
 
         return $next($request);
