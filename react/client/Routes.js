@@ -19,10 +19,10 @@ import EditChildren from './components/admin/edit/EditChildren';
 import EditPhotosession from './components/admin/edit/EditPhotosession';
 
 const renderRoutes = () => (
-  <Router history={browserHistory}>
+  <Router history={browserHistory} token="test">
 
 
-    <Route path="/" component={Auth}/>
+    <Route path="/auth" component={Auth} />
 
     <Route path="/" component={AppLayout}>
       <IndexRoute component={Home}/>

@@ -12,9 +12,17 @@ nav ul a, nav .brand-logo {
     color: #444;
 }
 
+
 .full-width {
     width: 100%;
 }
+
+ .halfWidth {
+     width: 60%;
+     margin:auto;
+     display: block;
+ }
+
 
 .vertical-center {
     position: absolute;

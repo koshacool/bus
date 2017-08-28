@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar, NavItem } from 'react-materialize';
+import { Navbar, NavItem, Button } from 'react-materialize';
 import {Link} from 'react-router';
 import Logo from './Logo';
 
@@ -27,6 +27,10 @@ const Header = () => (
     </NavItem>
     <NavItem className="grey-text text-darken-4 right" href='/photos'>
       <Link to="/photosession" >Photosession</Link>
+    </NavItem>
+
+    <NavItem className="grey-text text-darken-4 right" href='logout'>
+      <a href="logout" >Logout</a>
     </NavItem>
 
   </Navbar>

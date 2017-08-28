@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+
     public function authenticate(Request $request)
     {
         // grab credentials from the request
@@ -19,7 +20,7 @@ class AuthController extends Controller
 
         try {
             // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['status' => 'error', 'error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -27,14 +28,20 @@ class AuthController extends Controller
             return response()->json(['status' => 'error', 'error' => 'could_not_create_token'], 500);
         }
 
-        // all good so return the token
+        //Authorization without token
+//        if (Auth::attempt($credentials)) {
+//            return redirect('/');
+//        }
+
+        // All good so return the token
         return response()->json(['status' => 'ok', 'token' => $token]);
     }
+
 
     public function refresh()
     {
         $token = JWTAuth::getToken();
-        Log::info($token);
+
 
         if (!$token) {
             return response()->json(['status' => 'error', 'error' => 'invalid_credentials'], 401);
@@ -48,7 +55,8 @@ class AuthController extends Controller
         return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
-    public function profile(){
+    public function profile()
+    {
         $userId = JWTAuth::parseToken()->authenticate()->id;
 
         $user = User::find($userId);
@@ -57,4 +65,13 @@ class AuthController extends Controller
 
         return response()->json($user);
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('auth');
+
+    }
+
+
 }
