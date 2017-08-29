@@ -12,22 +12,17 @@ import Photosession from './components/photos/Photosession';
 import PhotosessionPhotos from './components/photos/PhotosessionPhotos';
 
 import Admin from './components/admin/Admin';
-import Upload from './components/admin/upload/Upload';
-import EditWedding from './components/admin/edit/EditWedding';
-import EditLovestory from './components/admin/edit/EditLovestory';
-import EditChildren from './components/admin/edit/EditChildren';
-import EditPhotosession from './components/admin/edit/EditPhotosession';
+import Users from './components/admin/users/Users';
+
+
 
 const renderRoutes = () => (
   <Router history={browserHistory} token="test">
 
-
-    <Route path="/auth" component={Auth} />
-
     <Route path="/" component={AppLayout}>
       <IndexRoute component={Home}/>
 
-
+      <Route path="/auth" component={Auth} />
 
       <Route path="photos" component={PhotosList}/>
       <Route path="wedding" component={Wedding}/>
@@ -38,12 +33,13 @@ const renderRoutes = () => (
     </Route>
 
     <Route path="/admin" component={Admin}>
-      <IndexRoute component={Upload} />
-      <Route path="wedding" component={EditWedding}/>
-      <Route path="lovestory" component={EditLovestory}/>
-      <Route path="children" component={EditChildren}/>
-      <Route path="photosession" component={EditPhotosession}/>
+      <IndexRoute component={Users} />
 
+      <Route path="users" component={Users}/>
+      {/*<Route path="stops" component={BusStop}/>*/}
+      {/*<Route path="routes" component={BusRoutes}/>*/}
+      {/*<Route path="firms" component={Firms}/>*/}
+      {/*<Route path="buses" component={Buses}/>*/}
     </Route>
   </Router >
 );

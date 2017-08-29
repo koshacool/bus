@@ -4,7 +4,7 @@ import { Footer } from 'react-materialize';
 
 const SiteFooter = () => (
   <Footer
-    className="grey lighten-3 page-footer"
+    className="grey lighten-3 page-footer footer"
     copyrights="&copy 2015 Copyright Text"
 
     moreLinks={

@@ -1,8 +1,23 @@
-body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+* {
+  margin: 0;
+  padding: 0;
 }
+
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+.content {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding-bottom: 90px;
+}
+.footer {
+  height: 80px;
+  margin-top: -80px;
+}
+
 
 main {
     flex: 1 0 auto;
@@ -24,78 +39,23 @@ nav ul a, nav .brand-logo {
  }
 
 
-.vertical-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 30%;
-    width: 50%;
-    margin: -15% 0 0 -25%;
-}
+/*.vertical-center {*/
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*height: 30%;*/
+    /*width: 50%;*/
+    /*margin: -15% 0 0 -25%;*/
+/*}*/
 
 .page-footer span {
+    margin-top: 200px;
     color: #444
 }
 
-.dropzone {
-    margin-bottom: 20px;
-}
-
-/*img {*/
-/*max-width: 200px;*/
-
-/*}*/
-
-.grid {
-    background: #EEE;
-    width: auto;
-}
-
-/* clearfix */
-.grid:after {
-    content: '';
-    display: block;
-    clear: both;
-}
-
-/* ---- grid-item ---- */
-
-.grid-item {
-    overflow: hidden;
-    margin-bottom: 10px;
-    width: 350px;
-    float: left;
-}
 
 
-.grid-item img {
-    width: 350px;
-}
 
-.image {
-    width: 350px;
-    height: 175px;
-}
-
-/*Zoom img*/
-.image img {
-    width: 350px;
-    height: 175px;
-    /*Image zoom*/
-    -moz-transition: all 1s ease-out;
-    -o-transition: all 1s ease-out;
-    -webkit-transition: all 1s ease-out;
-
-}
-
-.image img:hover {
-    /*Image zoom*/
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -o-transform: scale(1.1);
-
-    opacity: 0.6;
-}
 
 
 

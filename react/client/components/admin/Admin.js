@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'react-materialize';
+import {Tabs, Tab} from 'react-materialize';
 
 import AdminHeader from './AdminHeader';
+import SiteFooter from '../layouts/SiteFooter';
 
 class Admin extends React.Component {
   constructor() {
@@ -10,14 +11,18 @@ class Admin extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const {children} = this.props;
 
     return (
-      <div className="container">
+      <div className="wrapper">
 
         <AdminHeader />
 
-        { children }
+        <div className="content">
+          {children}
+        </div>
+
+        <SiteFooter />
 
       </div>
     );

@@ -22,8 +22,11 @@ Route::post('/auth', "AuthController@authenticate");
 Route::get('/auth', function () {
     return view('index');
 });
-//Route::get('/auth/refresh',"AuthController@refresh");
-//Route::get('/auth/profile',"AuthController@profile");
+Route::get('/auth/refresh',"AuthController@refresh");
+Route::get('/auth/profile',"AuthController@profile");
+
+Route::get('/get/users', 'AdminController@getUsers');
+
 
 //For all url show SPA
 Route::any('{all}', function () {

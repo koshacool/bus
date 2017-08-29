@@ -13,18 +13,22 @@ import Header from './Header';
 class AppLayout extends React.Component {
 
   render() {
-    const { loading, children, isLoggedIn } = this.props;
+    const {loading, children, isLoggedIn} = this.props;
 
     return (
-      <Spinner loading={false}>
-        <Header />
+      <div className="wrapper">
+        <Spinner loading={false}>
+          <Header/>
 
-        <main className="grey lighten-3">
-          {!loading && children}
-        </main>
+          <main className="grey lighten-3">
+            <div className="content">
+              {!loading && children}
+            </div>
+          </main>
 
-        <SiteFooter />
-      </Spinner>
+          <SiteFooter/>
+        </Spinner>
+      </div>
     );
   }
 }

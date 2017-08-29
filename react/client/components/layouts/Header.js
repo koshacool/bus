@@ -9,6 +9,10 @@ const Header = () => (
     brand="HOME"
     className="grey lighten-3 grey-text text-darken-4 "
   >
+    <NavItem className="grey-text text-darken-4 right" href='logout'>
+      <a href="logout" >Logout</a>
+    </NavItem>
+
     <NavItem  className="grey-text text-darken-4 right" href='/admin'>
       <Link to="/admin" >Upload</Link>
     </NavItem>
@@ -29,9 +33,7 @@ const Header = () => (
       <Link to="/photosession" >Photosession</Link>
     </NavItem>
 
-    <NavItem className="grey-text text-darken-4 right" href='logout'>
-      <a href="logout" >Logout</a>
-    </NavItem>
+
 
   </Navbar>
 );

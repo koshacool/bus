@@ -29,12 +29,13 @@ class AuthController extends Controller
         }
 
         //Authorization without token
-//        if (Auth::attempt($credentials)) {
-//            return redirect('/');
-//        }
+        if (Auth::attempt($credentials)) {
+            return response()->json(['status' => 'ok', 'token' => $token]);
+        }
 
         // All good so return the token
-        return response()->json(['status' => 'ok', 'token' => $token]);
+//        return redirect('/');
+//        return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
 
@@ -70,7 +71,6 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('auth');
-
     }
 
 

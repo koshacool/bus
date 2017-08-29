@@ -26,12 +26,15 @@ class Auth extends React.Component {
   authorization(e) {
     e.preventDefault();
     const { email, password } = this.state;
+    const { router } = this.props;
 
     axios.post('/auth', {
       email,
       password,
     })
       .then(res => console.log(res))
+      .then(() => this.props.router.push('/'))
+
       .catch(console.log.bind(console));
 
   }
@@ -39,7 +42,6 @@ class Auth extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    console.log(this.props)
 
     return (
       <div className="container vertical-center">
@@ -52,6 +54,7 @@ class Auth extends React.Component {
               name="email"
               validate
               required
+              id="email"
               value={email}
               onChange={this.onChangeInput('email')}
             >
@@ -67,10 +70,11 @@ class Auth extends React.Component {
               type="password"
               validate
               required
+              id="password"
               value={password}
               onChange={this.onChangeInput('password')}
             >
-                <Icon>remove_red_eye</Icon>
+              <Icon>remove_red_eye</Icon>
             </Input>
           </Row>
 
