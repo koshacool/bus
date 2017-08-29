@@ -28227,8 +28227,8 @@
 /***/ (function(module, exports) {
 
 	module.exports = {
-		"apiPrefix": "http://localhost:8000",
-		"serverPort": "8000",
+		"apiPrefix": "http://localhost:8080",
+		"serverPort": "8080",
 		"db": {
 			"name": "notes",
 			"host": "localhost",
