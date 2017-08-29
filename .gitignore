@@ -4,6 +4,8 @@
 .gitattributes
 vendor/
 
+composer.lock
+
 #frontend
 
 # compiled output
