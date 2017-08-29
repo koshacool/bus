@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 Route::get('user/profile', 'AuthController@profile');
 
+
+
 // Admin area
 // Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::group(['prefix' => 'admin'], function () {

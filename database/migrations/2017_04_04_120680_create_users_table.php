@@ -15,17 +15,18 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default('');
-            $table->string('email')->unique()->default('');
-            $table->string('password')->default('');
-            $table->integer('role_id')->unsigned();
-            $table->softDeletes();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
+            $table->integer('role_id')->unsigned();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
         });
 
-        Schema::enableForeignKeyConstraints();
+
+         Schema::enableForeignKeyConstraints();
     }
 
     /**

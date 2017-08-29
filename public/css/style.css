@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+.content {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding-bottom: 90px;
+}
+.footer {
+  height: 80px;
+  margin-top: -80px;
+}
+
+
+main {
+    flex: 1 0 auto;
+}
+
+nav ul a, nav .brand-logo {
+    color: #444;
+}
+
+
+.full-width {
+    width: 100%;
+}
+
+ .halfWidth {
+     width: 60%;
+     margin:auto;
+     display: block;
+ }
+
+
+/*.vertical-center {*/
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*height: 30%;*/
+    /*width: 50%;*/
+    /*margin: -15% 0 0 -25%;*/
+/*}*/
+
+.page-footer span {
+    margin-top: 200px;
+    color: #444
+}
+
+
+
+
+
+
+
+
+
+
+
