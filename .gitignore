@@ -3,11 +3,13 @@
 .env
 .gitattributes
 vendor/
+public/js/build/bundle.js
 
 composer.lock
 
 #frontend
 
+#angular
 # compiled output
 /busfe/dist
 /busfe/tmp
@@ -48,3 +50,12 @@ busfe/node_modules
 # System Files
 /busfe/.DS_Store
 /busfe/Thumbs.db
+
+#react
+react/node_modules/
+react/etc/config.json
+react/script
+react/.idea
+react/public/images/*
+
+
