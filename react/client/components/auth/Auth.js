@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiPrefix } from '../../../etc/config.json';
+import handleErrors from '../../utils/handleErrors';
 
 import { Row, Input, Icon, Button } from 'react-materialize';
 
@@ -34,8 +35,7 @@ class Auth extends React.Component {
     })
       .then(res => console.log(res))
       .then(() => this.props.router.push('/'))
-
-      .catch(console.log.bind(console));
+      .catch(handleErrors.bind(this));
 
   }
 

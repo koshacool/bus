@@ -20,22 +20,22 @@ const renderRoutes = () => (
   <Router history={browserHistory} token="test">
 
     <Route path="/" component={AppLayout}>
-      <IndexRoute component={Home}/>
+      <IndexRoute component={Home} />
 
       <Route path="/auth" component={Auth} />
 
-      <Route path="photos" component={PhotosList}/>
-      <Route path="wedding" component={Wedding}/>
-      <Route path="lovestory" component={LoveStory}/>
-      <Route path="children" component={Children}/>
-      <Route path="photosession" component={Photosession}/>
+      <Route path="photos" component={PhotosList} />
+      <Route path="wedding" component={Wedding} />
+      <Route path="lovestory" component={LoveStory} />
+      <Route path="children" component={Children} />
+      <Route path="photosession" component={Photosession} />
       <Route path="photosession/:_id" component={PhotosessionPhotos} />
     </Route>
 
     <Route path="/admin" component={Admin}>
       <IndexRoute component={Users} />
 
-      <Route path="users" component={Users}/>
+      <Route path="users" component={Users} />
       {/*<Route path="stops" component={BusStop}/>*/}
       {/*<Route path="routes" component={BusRoutes}/>*/}
       {/*<Route path="firms" component={Firms}/>*/}
