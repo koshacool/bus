@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/genie.css';
+
 import Spinner from '../spiner/Spinner';
 import SiteFooter from './SiteFooter';
 import Header from './Header';
 
+
+const ALERTS_LIMIT = 5;
 
 /**
  * Class for show different header for
@@ -18,7 +25,8 @@ class AppLayout extends React.Component {
     return (
       <div className="wrapper">
         <Spinner loading={false}>
-          <Header/>
+
+          <Header />
 
           <main className="grey lighten-3">
             <div className="content">
@@ -26,8 +34,12 @@ class AppLayout extends React.Component {
             </div>
           </main>
 
-          <SiteFooter/>
+          <SiteFooter />
+
         </Spinner>
+
+        <Alert stack={{ limit: ALERTS_LIMIT }} />
+
       </div>
     );
   }
