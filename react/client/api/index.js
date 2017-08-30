@@ -6,7 +6,7 @@ import {apiPrefix} from '../../etc/config.json';
 export default {
 
   authorization(email, password) {
-    return axios.post(`${apiPrefix}/auth`, {
+    return axios.post(`${apiPrefix}/sign-in`, {
       email,
       password,
     });

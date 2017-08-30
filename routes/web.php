@@ -12,13 +12,15 @@
 */
 
 //Show form for authorization
-Route::get('sign-in', function () {
+Route::get('/sign-in', function () {
     return view('index');});
 
 //Authorizate user
-Route::post('sign-in', "AuthController@authenticate");
+Route::post('/sign-in', "AuthController@authenticate");
 
-
+Route::get('/', function () {
+    return view('index');
+});
 //Show SPA
 Route::any('{all}', function () {
     return view('index');
