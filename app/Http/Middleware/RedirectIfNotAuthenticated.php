@@ -18,7 +18,7 @@ class RedirectIfNotAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (! Auth::guard($guard)->check()) {
-            return redirect('/auth');
+//            return redirect('/auth');
         }
 
         return $next($request);

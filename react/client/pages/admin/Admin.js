@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import {Tabs, Tab} from 'react-materialize';
 
 import AdminHeader from './AdminHeader';
-import SiteFooter from '../layouts/SiteFooter';
+import SiteFooter from '../../layouts/SiteFooter';
+
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/genie.css';
+
+const ALERTS_LIMIT = 5;
 
 class Admin extends React.Component {
   constructor() {
@@ -23,6 +29,8 @@ class Admin extends React.Component {
         </div>
 
         <SiteFooter />
+
+        <Alert stack={{ limit: ALERTS_LIMIT }} />
 
       </div>
     );

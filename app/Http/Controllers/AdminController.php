@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
 {
@@ -15,10 +17,14 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('jwt.auth');
+//        $this->middleware('auth');
     }
 
-    public function getUsers() {
-        return User::all();
+    public function getUsers()
+    {
+        $users = User::all();
+        return $users;
+
     }
 }

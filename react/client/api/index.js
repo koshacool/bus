@@ -1,15 +1,29 @@
 import axios from 'axios';
 import request from 'superagent';
-import { apiPrefix } from '../../etc/config.json';
+import {apiPrefix} from '../../etc/config.json';
 
 
 export default {
-  usersList() {
-    return axios.get(`${apiPrefix}/get/users`);
+
+  authorization(email, password) {
+    return axios.post(`${apiPrefix}/sign-in`, {
+      email,
+      password,
+    });
   },
 
+  usersList() {
+    // return axios.get(`${apiPrefix}/get/users`);
 
-
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/get/users`,
+      headers:  {
+        Accept: 'application/json',
+        Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hdXRoIiwiaWF0IjoxNTA0MDc3Mjg3LCJleHAiOjE1MDQwNzczNDcsIm5iZiI6MTUwNDA3NzI4NywianRpIjoiOHh0NEtUTm9odjRzUENCaCJ9.tE0eGf63YGNWbbTPJ3_gfpRbqOl_xXy-hlDb_WwtR20"
+      },
+    });
+  },
 
 
   // createPhotos(filesObj, type, photosessionId) {

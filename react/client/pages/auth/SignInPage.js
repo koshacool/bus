@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiPrefix } from '../../../etc/config.json';
 import handleErrors from '../../utils/handleErrors';
+import { authorization } from '../../api/index';
 
 import { Row, Input, Icon, Button } from 'react-materialize';
 
 
-class Auth extends React.Component {
+class SignInPage extends React.Component {
   constructor() {
     super();
 
@@ -29,13 +30,14 @@ class Auth extends React.Component {
     const { email, password } = this.state;
     const { router } = this.props;
 
-    axios.post('/auth', {
-      email,
-      password,
-    })
-      .then(res => console.log(res))
-      .then(() => this.props.router.push('/'))
-      .catch(handleErrors.bind(this));
+    authorization(email, password)
+      .then(res => {
+        console.log(res);
+        sessionStorage.setItem('token', res.data.token);
+        console.log(sessionStorage.getItem('token'));
+      })
+      .then(() => router.push('/'))
+      .catch(e => handleErrors(e));
 
   }
 
@@ -89,4 +91,4 @@ class Auth extends React.Component {
 
 }
 
-export default Auth;
+export default SignInPage;

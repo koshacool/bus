@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {usersList} from '../../../api';
+import {usersList} from '../../../api/index';
 
-import Spinner from '../../spiner/Spinner';
+import Spinner from '../../../components/spiner/Spinner';
 
 const User = (props) => {
   const { name, email, role_id, action } = props.user;

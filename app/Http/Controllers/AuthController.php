@@ -29,13 +29,12 @@ class AuthController extends Controller
         }
 
         //Authorization without token
-        if (Auth::attempt($credentials)) {
-            return response()->json(['status' => 'ok', 'token' => $token]);
-        }
+//        if (Auth::attempt($credentials)) {
+//            return response()->json(['status' => 'ok', 'token' => $token]);
+//        }
 
         // All good so return the token
-//        return redirect('/');
-//        return response()->json(['status' => 'ok', 'token' => $token]);
+        return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
 
@@ -56,15 +55,9 @@ class AuthController extends Controller
         return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
-    public function profile()
-    {
-        $userId = JWTAuth::parseToken()->authenticate()->id;
-
-        $user = User::find($userId);
-        $role = $user->role()->get();
-        $user->role = $role[0];
-
-        return response()->json($user);
+    public function getAuthUser(Request $request){
+        $user = JWTAuth::toUser($request->token);
+        return response()->json(['result' => $user]);
     }
 
     public function logout()

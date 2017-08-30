@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'react-materialize';
-import {usersList} from '../../../api';
+import {usersList} from '../../../api/index';
+import handleErrors from '../../../utils/handleErrors';
 
-import Spinner from '../../spiner/Spinner';
+import Spinner from '../../../components/spiner/Spinner';
 import User from './User';
 
 
@@ -20,7 +21,7 @@ class Users extends React.Component {
   componentDidMount() {
     usersList()
       .then(res => this.setState({ users: res.data }))
-      .catch(console.log.bind(console));
+      .catch(handleErrors.bind(this));
 
   }
 
