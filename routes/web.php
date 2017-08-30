@@ -12,18 +12,11 @@
 */
 
 //Show form for authorization
-Route::get('auth', function () {
+Route::get('sign-in', function () {
     return view('index');});
 
 //Authorizate user
-Route::post('auth', "AuthController@authenticate");
-
-
-
-//Check authrization user for all these queryes
-Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::get('get/users', 'AdminController@getUsers');
-});
+Route::post('sign-in', "AuthController@authenticate");
 
 
 //Show SPA
