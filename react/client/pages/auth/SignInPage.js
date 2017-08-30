@@ -34,7 +34,6 @@ class SignInPage extends React.Component {
       .then(res => {
         console.log(res);
         sessionStorage.setItem('token', res.data.token);
-        console.log(sessionStorage.getItem('token'));
       })
       .then(() => router.push('/'))
       .catch(e => handleErrors(e));

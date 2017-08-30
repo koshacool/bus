@@ -15,12 +15,15 @@ const renderRoutes = () => (
   <Router history={browserHistory}>
 
     <Route path="/" component={AppLayout} publicRoutes={publicRoutes} commonRoutes={commonRoutes}>
-      {/*<IndexRoute component={Admin}/>*/}
       <Route path="sign-in" component={SignInPage}/>
-      <Route path="admin" component={Admin}/>
+      <IndexRoute component={Users}/>
+
+      <Route path="users" component={Users}/>
+      {/*<Route path="stops" component={BusStop}/>*/}
+      {/*<Route path="routes" component={BusRoutes}/>*/}
+      {/*<Route path="firms" component={Firms}/>*/}
+
     </Route>
-
-
 
 
   </Router>

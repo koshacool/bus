@@ -58,7 +58,7 @@ class AppLayout extends React.Component {
 
       //If user logged redirect to base directory
       if (isPublicRoute && isLoggedIn) {
-        redirectTo(router, '/admin');
+        redirectTo(router, '/');
 
         //If user isn't logged redirect to login page
       } else if (!isPublicRoute && !isLoggedIn) {

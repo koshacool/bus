@@ -12,16 +12,19 @@ export default {
     });
   },
 
+  userInfo() {
+
+  },
+
   usersList() {
     // return axios.get(`${apiPrefix}/get/users`);
 
     return axios({
-      method: 'post',
-      url: `${apiPrefix}/get/users`,
-      headers:  {
-        Accept: 'application/json',
-        Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hdXRoIiwiaWF0IjoxNTA0MDc3Mjg3LCJleHAiOjE1MDQwNzczNDcsIm5iZiI6MTUwNDA3NzI4NywianRpIjoiOHh0NEtUTm9odjRzUENCaCJ9.tE0eGf63YGNWbbTPJ3_gfpRbqOl_xXy-hlDb_WwtR20"
-      },
+      method: 'get',
+      url: `${apiPrefix}/api/get/users`,
+      params: {
+        token: sessionStorage.getItem('token'),
+      }
     });
   },
 
