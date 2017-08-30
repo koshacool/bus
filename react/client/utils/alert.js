@@ -9,7 +9,7 @@ const alertOptions = {
 };
 
 
-const getErrorKey = error => errorKeys.find(key => !!error[key]);
+const getErrorKey = error => errorKeys.find(key => !!error.data[key]);
 
 const getErrorMessage = (error) => {
   if (!error) {
@@ -18,8 +18,8 @@ const getErrorMessage = (error) => {
 
   const errorKey = getErrorKey(error);
 
-  if (errorKey && error[errorKey]) {
-    return error[errorKey];
+  if (errorKey && error.data[errorKey]) {
+    return `${error.data[errorKey]}, status: ${error.status}`;
   }
 
   return (typeof error === 'string' && error) || 'Unspecified error';
@@ -37,18 +37,18 @@ export const showError = error => {
 
 
 export const showSuccess = message => {
-  console.log(error);
+  console.log(message);
   Alert.success(message, alertOptions);
 };
 
 
 export const showWarning = message => {
-  console.log(error);
+  console.log(message);
   Alert.warning(message, alertOptions);
 };
 
 
 export const showInfo = message => {
-  console.log(error);
+  console.log(message);
   Alert.info(message, alertOptions);
 };

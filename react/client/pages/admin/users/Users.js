@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'react-materialize';
-import {usersList} from '../../../api/index';
-import handleErrors from '../../../utils/handleErrors';
+import { usersList } from '../../../api/index';
+import checkAuthorized from '../../../utils/userUtils';
 
 import Spinner from '../../../components/spiner/Spinner';
 import User from './User';
@@ -19,22 +19,22 @@ class Users extends React.Component {
   }
 
   componentDidMount() {
+    const { push } = this.props.router;
     usersList()
       .then(res => this.setState({ users: res.data }))
-      .catch(handleErrors.bind(this));
-
+      .catch(checkAuthorized.bind(this, push));
   }
 
   renderUsers() {
     const { users } = this.state;
 
     return users
-      .map(user => <User user={user} key={user.id}/>);
+      .map(user => <User user={user} key={user.id} />);
   }
 
 
   render() {
-    const {users} = this.state;
+    const { users } = this.state;
     const loading = users.length === 0;
 
     return (
@@ -44,15 +44,15 @@ class Users extends React.Component {
           <Button>ADD</Button>
 
 
-          {/*Display registered users*/}
+          {/* Display registered users*/}
           <table>
             <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
             </thead>
 
             <tbody>

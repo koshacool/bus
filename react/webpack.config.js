@@ -4,8 +4,8 @@ var path = require('path');
 module.exports = {
   entry: "./client/main.js",
   output: {
-    // path: path.resolve("../public/js/build"),
-    publicPath: "build/",
+    path: path.resolve("../public/js/build"),
+    // publicPath: "build/",
     filename: "bundle.js"
   },
   module: {
