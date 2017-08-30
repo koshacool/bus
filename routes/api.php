@@ -13,6 +13,41 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('auth', function () {
+    return view('index');
+});
+
+Route::post('auth', "AuthController@authenticate");
+
+
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::get('get/users', 'AdminController@getUsers');
+
+    Route::any('{all}', function () {
+        return view('index');
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('user/profile', 'AuthController@profile');
 
 

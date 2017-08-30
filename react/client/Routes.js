@@ -22,7 +22,7 @@ const renderRoutes = () => (
     <Route path="/" component={AppLayout}>
       <IndexRoute component={Home} />
 
-      <Route path="/auth" component={Auth} />
+      <Route path="auth" component={Auth} />
 
       <Route path="photos" component={PhotosList} />
       <Route path="wedding" component={Wedding} />
