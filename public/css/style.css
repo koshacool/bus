@@ -8,6 +8,11 @@ body,
 .wrapper {
   height: 100%;
 }
+
+button {
+    margin-left: 10px;
+}
+
 .content {
   box-sizing: border-box;
   min-height: 100%;
