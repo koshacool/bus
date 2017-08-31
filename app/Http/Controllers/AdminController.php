@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -23,7 +24,27 @@ class AdminController extends Controller
     public function getUsers()
     {
         $users = User::all();
-        return $users;
+        $users = $this->addRoleToUser($users);
 
+        return response()->json($users);
     }
+
+    public function getRoles()
+    {
+        $roles = Role::all();
+        return response()->json($roles);
+    }
+
+    private function addRoleToUser($users) {
+        $newUsers = [];
+        foreach ($users as $value) {
+            $user = User::find($value->id);
+            $role = $user->role()->get();
+            $user->role = $role[0]->name;
+            $newUsers[] = $user;
+        }
+        return $newUsers;
+    }
+
+
 }

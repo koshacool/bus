@@ -13,18 +13,32 @@ export default {
   },
 
   userInfo() {
-
+    return axios({
+      method: 'get',
+      url: `${apiPrefix}/api/get/profile`,
+      params: {
+        token: sessionStorage.getItem('token'),
+      },
+    });
   },
 
   usersList() {
-    // return axios.get(`${apiPrefix}/get/users`);
-
     return axios({
       method: 'get',
       url: `${apiPrefix}/api/get/users`,
       params: {
         token: sessionStorage.getItem('token'),
-      }
+      },
+    });
+  },
+
+  rolesList() {
+    return axios({
+      method: 'get',
+      url: `${apiPrefix}/api/get/roles`,
+      params: {
+        token: sessionStorage.getItem('token'),
+      },
     });
   },
 
