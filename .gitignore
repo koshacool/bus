@@ -4,6 +4,8 @@
 .gitattributes
 vendor/
 public/js/build/bundle.js
+react/public/build/bundle.js
+react/bundle.js
 
 composer.lock
 
