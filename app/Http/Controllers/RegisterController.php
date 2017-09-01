@@ -16,7 +16,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  Request  $request
      * @return \App\User
      */
     public function create(Request $request)
@@ -27,6 +27,20 @@ class RegisterController extends Controller
             'role_id' => $request->roleId,
             'password' => bcrypt($request->password),
         ]);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  Request  $request
+     * @return \App\User
+     */
+    public function remove(Request $request)
+    {
+        $user= User::find($request->id);
+        $user->delete();
+
+        return response()->json(['status' => 'ok', 'statusText' => 'revomed']);
     }
 
 

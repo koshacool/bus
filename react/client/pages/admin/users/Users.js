@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Icon} from 'react-materialize';
-import {usersList} from '../../../api/index';
+import {usersList, removeUser} from '../../../api/index';
 import checkAuthorized from '../../../utils/userUtils';
 
 import Spinner from '../../../components/spiner/Spinner';
@@ -18,6 +18,7 @@ class Users extends React.Component {
     };
 
     this.renderUsers = this.renderUsers.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   componentDidMount() {
@@ -28,19 +29,27 @@ class Users extends React.Component {
       .catch(checkAuthorized.bind(this, push));
   }
 
+  onRemove(id) {
+    const {push} = this.props.router;
 
+    return () => {
+      removeUser(id)
+      .then(res => console.log(res))
+      .catch(checkAuthorized.bind(this, push));
+    };
+  }
 
   renderUsers() {
     const {users} = this.state;
 
     return users
-      .map(user => <User user={user} key={user.id}/>);
+      .map(user => <User user={user} key={user.id} onRemove={this.onRemove}/>);
   }
 
 
   render() {
-    const { router } = this.props;
-    const { users } = this.state;
+    const {router} = this.props;
+    const {users} = this.state;
     const loading = users.length === 0;
 
     return (
@@ -48,6 +57,7 @@ class Users extends React.Component {
         <Spinner loading={loading} className="grid" id="grid">
           <h3> Users: </h3>
           <ModalsManager
+            id="addUser"
             modalName="AddUser"
             headerName="Add new user"
             trigger="Add"

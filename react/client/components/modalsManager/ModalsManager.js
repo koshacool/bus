@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {Modal, Button} from 'react-materialize';
 
 import FormAddUser from './Forms/FormAddUser';
+import Confirm from './Confirm';
 
 /**
  * Object with modal components names
@@ -14,6 +15,7 @@ import FormAddUser from './Forms/FormAddUser';
  */
 const ModalComponents = {
   AddUser: FormAddUser,
+  Confirm,
 };
 
 /**
@@ -31,13 +33,13 @@ class ModalsManager extends React.Component {
   }
 
   render() {
-    const {modalName, headerName, trigger, otherProps} = this.props;
+    const { id, modalName, headerName, trigger, otherProps } = this.props;
     //Get component from object by name
     const ModalComponent = ModalComponents[modalName];
 
     return (
       <Modal
-        id="modal"
+        id={id}
         header={headerName}
         trigger={<Button>{trigger}</Button>}
         actions={<div></div>}

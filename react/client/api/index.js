@@ -56,6 +56,17 @@ export default {
     });
   },
 
+  removeUser(id) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/remove`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        id,
+      },
+    });
+  },
+
 
   // createPhotos(filesObj, type, photosessionId) {
   //   return new Promise((resolve, reject) => {

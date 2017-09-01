@@ -22,6 +22,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('get/roles', 'AdminController@getRoles');
 
     Route::post('user/create', 'RegisterController@create');
+    Route::post('user/remove', 'RegisterController@remove');
     Route::post('user/update', 'RegisterController@updateUser');
 });
 
