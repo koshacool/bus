@@ -15,8 +15,9 @@ use Illuminate\Http\Request;
 
 //Check authrization user for all these queryes
 Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::get('get/user', 'AuthController@getAuthUser');
+    Route::get('get/profile', 'AuthController@profile');
     Route::get('get/users', 'AdminController@getUsers');
+    Route::get('get/roles', 'AdminController@getRoles');
 });
 
 

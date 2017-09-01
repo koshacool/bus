@@ -6,6 +6,7 @@ import { Row, Input, Button } from 'react-materialize';
 
 export const FormAddUser = (props) => {
   const { otherProps, closeModal } = props;
+
   return (
     <div>
       <Row>
@@ -13,10 +14,11 @@ export const FormAddUser = (props) => {
         <Input s={12} label="Email" />
         <Input type="password" label="Password" s={12} />
         <Row>
-          <Input s={12} type='select' label="Role" >
-            <option value='1'>Option 1</option>
-            <option value='2'>Option 2</option>
-            <option value='3'>Option 3</option>
+          <Input s={12} type='select' label="Role">
+            {
+              otherProps.roles
+              .map(role => <option key={role.id} value={role.id}>{role.name}</option>)
+            }
           </Input>
         </Row>
       </Row>

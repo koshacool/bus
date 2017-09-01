@@ -50,12 +50,18 @@ class AuthController extends Controller
         return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
+    public function profile()
+    {
+        $userId = JWTAuth::parseToken()->authenticate()->id;
 
-    public function getAuthUser(Request $request){
-        $user = JWTAuth::toUser($request->token);
-        $role = $user->roles()->get();
-        return response()->json(['result' => $user]);
+        $user = User::find($userId);
+        $role = $user->role()->get();
+        $user->role = $role[0]->name;
+
+        return response()->json($user);
     }
+
+
 
 
 

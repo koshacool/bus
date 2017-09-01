@@ -1,7 +1,7 @@
 import {showError, showSuccess, showWarning, showInfo} from './alert';
 
 const handleErrors = (error) => {
-  if ('error' in error.data) {
+  if (error.data) {
     return showError(error);
   }
 
