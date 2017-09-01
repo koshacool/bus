@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Icon} from 'react-materialize';
-import {usersList, rolesList} from '../../../api/index';
+import {usersList} from '../../../api/index';
 import checkAuthorized from '../../../utils/userUtils';
 
 import Spinner from '../../../components/spiner/Spinner';
@@ -15,7 +15,6 @@ class Users extends React.Component {
     super();
     this.state = {
       users: [],
-      roles: [],
     };
 
     this.renderUsers = this.renderUsers.bind(this);
@@ -27,12 +26,9 @@ class Users extends React.Component {
     usersList()
       .then(res => this.setState({users: res.data}))
       .catch(checkAuthorized.bind(this, push));
-
-    //Get all roles
-    rolesList()
-      .then(res => this.setState({roles: res.data}))
-      .catch(checkAuthorized.bind(this, push));
   }
+
+
 
   renderUsers() {
     const {users} = this.state;
@@ -43,7 +39,8 @@ class Users extends React.Component {
 
 
   render() {
-    const {users, roles} = this.state;
+    const { router } = this.props;
+    const { users } = this.state;
     const loading = users.length === 0;
 
     return (
@@ -54,7 +51,7 @@ class Users extends React.Component {
             modalName="AddUser"
             headerName="Add new user"
             trigger="Add"
-            otherProps={{confirm: 'create', roles}}
+            otherProps={{confirm: 'create', router}}
           />
 
 

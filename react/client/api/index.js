@@ -42,6 +42,20 @@ export default {
     });
   },
 
+  createUser({name, email, password, roleId}) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/create`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        name,
+        email,
+        password,
+        roleId,
+      },
+    });
+  },
+
 
   // createPhotos(filesObj, type, photosessionId) {
   //   return new Promise((resolve, reject) => {

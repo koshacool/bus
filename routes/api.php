@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +20,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('get/profile', 'AuthController@profile');
     Route::get('get/users', 'AdminController@getUsers');
     Route::get('get/roles', 'AdminController@getRoles');
+
+    Route::post('user/create', 'RegisterController@create');
+    Route::post('user/update', 'RegisterController@updateUser');
 });
 
 

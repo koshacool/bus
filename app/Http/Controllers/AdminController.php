@@ -10,7 +10,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
 {
-
     /**
      * Create a new controller instance.
      *
@@ -21,6 +20,11 @@ class AdminController extends Controller
         $this->middleware('jwt.auth');
     }
 
+    /**
+     * Get all registered users
+     *
+     * @return json
+     */
     public function getUsers()
     {
         $users = User::all();
@@ -29,13 +33,26 @@ class AdminController extends Controller
         return response()->json($users);
     }
 
+    /**
+     * Get all available roles
+     *
+     * @return json
+     */
     public function getRoles()
     {
         $roles = Role::all();
         return response()->json($roles);
     }
 
-    private function addRoleToUser($users) {
+    /**
+     * Add to each user in array his own role
+     *
+     * @param  array  $users
+     *
+     * @return array
+     */
+    private function addRoleToUser($users)
+    {
         $newUsers = [];
         foreach ($users as $value) {
             $user = User::find($value->id);
@@ -45,6 +62,4 @@ class AdminController extends Controller
         }
         return $newUsers;
     }
-
-
 }

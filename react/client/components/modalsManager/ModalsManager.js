@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import {Modal, Button} from 'react-materialize';
 
-import {FormAddUser} from './Forms/FormAddUser';
+import FormAddUser from './Forms/FormAddUser';
 
 /**
  * Object with modal components names
