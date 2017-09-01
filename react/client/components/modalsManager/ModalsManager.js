@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import {Modal, Button} from 'react-materialize';
 
-import FormAddUser from './Forms/FormAddUser';
+import AddUser from './Forms/AddUser';
+import EditUser from './Forms/EditUser';
 import Confirm from './Confirm';
 
 /**
@@ -14,8 +15,9 @@ import Confirm from './Confirm';
  * @type {object}
  */
 const ModalComponents = {
-  AddUser: FormAddUser,
   Confirm,
+  AddUser,
+  EditUser,
 };
 
 /**
@@ -29,12 +31,13 @@ class ModalsManager extends React.Component {
   }
 
   closeModal() {
-    document.getElementById("closeModal").click();
+    const { id } = this.props;
+    document.getElementById(`closeModal${id}`).click();
   }
 
   render() {
     const { id, modalName, headerName, trigger, otherProps } = this.props;
-    //Get component from object by name
+    // Get component from object by name
     const ModalComponent = ModalComponents[modalName];
 
     return (
@@ -44,16 +47,17 @@ class ModalsManager extends React.Component {
         trigger={<Button>{trigger}</Button>}
         actions={<div></div>}
       >
-        <ModalComponent otherProps={otherProps} closeModal={this.closeModal}/>
+        <ModalComponent id={`closeModal${id}`} otherProps={otherProps} closeModal={this.closeModal} />
       </Modal>
     );
   }
-};
+}
 
 ModalsManager.propTypes = {
   headerName: PropTypes.string.isRequired,
   trigger: PropTypes.string.isRequired,
   modalName: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   otherProps: PropTypes.object,
 };
 

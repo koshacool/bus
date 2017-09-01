@@ -37,7 +37,14 @@ class RegisterController extends Controller
      */
     public function remove(Request $request)
     {
-        $user= User::find($request->id);
+        $id = $request->id;
+        $userId = JWTAuth::parseToken()->authenticate()->id;
+
+        if ($userId == $id) {
+            return response()->json(['status' => 'ok', 'error' => 'You cannot remove yourself!']);
+        }
+
+        $user= User::find($id);
         $user->delete();
 
         return response()->json(['status' => 'ok', 'statusText' => 'revomed']);

@@ -8,6 +8,7 @@ import ModalsManager from '../../../components/modalsManager/ModalsManager';
 
 const User = (props) => {
   const { name, email, role, id } = props.user;
+  const { onRemove } = props;
 
   return (
     <tr>
@@ -15,17 +16,28 @@ const User = (props) => {
       <td>{ email }</td>
       <td>{ role }</td>
       <td>
-        <Button>edit</Button>
         <ModalsManager
-          id={id}
+          id={`edit${id.toString()}`}
+          modalName="EditUser"
+          headerName="Are you sure?"
+          trigger="remove"
+          otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}
+        />
+        <ModalsManager
+          id={`remove${id.toString()}`}
           modalName="Confirm"
           headerName="Are you sure?"
           trigger="remove"
-          otherProps={{ confirm: 'delete', onConfirm: props.onRemove(id) }}
+          otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}
         />
       </td>
     </tr>
   );
+};
+
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
 
 
