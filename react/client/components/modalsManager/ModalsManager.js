@@ -1,11 +1,12 @@
-/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/forbid-prop-types,no-extra-semi,import/no-unresolved,import/no-named-as-default */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import {Modal, Button} from 'react-materialize';
 
-import {FormAddUser} from './Forms/FormAddUser';
+import AddEditUser from './Forms/AddEditUser';
+import Confirm from './Confirm';
 
 /**
  * Object with modal components names
@@ -13,7 +14,8 @@ import {FormAddUser} from './Forms/FormAddUser';
  * @type {object}
  */
 const ModalComponents = {
-  AddUser: FormAddUser,
+  AddEditUser,
+  Confirm,
 };
 
 /**
@@ -27,31 +29,37 @@ class ModalsManager extends React.Component {
   }
 
   closeModal() {
-    document.getElementById("closeModal").click();
+    console.log(this);
   }
 
+
   render() {
-    const {modalName, headerName, trigger, otherProps} = this.props;
-    //Get component from object by name
+    const {id, modalName, headerName, trigger, otherProps, actions} = this.props;
+
+    // Get component from object by name
     const ModalComponent = ModalComponents[modalName];
 
     return (
       <Modal
-        id="modal"
+        id={id}
         header={headerName}
         trigger={<Button>{trigger}</Button>}
-        actions={<div></div>}
+        actions=''
       >
-        <ModalComponent otherProps={otherProps} closeModal={this.closeModal}/>
+
+        <ModalComponent otherProps={otherProps} closeModal={this.closeModal} />
+
       </Modal>
     );
   }
 };
 
 ModalsManager.propTypes = {
+  id: PropTypes.string.isRequired,
   headerName: PropTypes.string.isRequired,
   trigger: PropTypes.string.isRequired,
   modalName: PropTypes.string.isRequired,
+  actions: PropTypes.node,
   otherProps: PropTypes.object,
 };
 

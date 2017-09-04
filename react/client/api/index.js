@@ -42,6 +42,46 @@ export default {
     });
   },
 
+  createUser({name, email, password, roleId}) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/create`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        name,
+        email,
+        password,
+        roleId,
+      },
+    });
+  },
+
+  editUser(id, { name, email, password, roleId }) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/update`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        id,
+        name,
+        email,
+        password,
+        roleId,
+      },
+    });
+  },
+
+  removeUser(id) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/remove`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        id,
+      },
+    });
+  },
+
 
   // createPhotos(filesObj, type, photosessionId) {
   //   return new Promise((resolve, reject) => {

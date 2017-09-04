@@ -18,6 +18,9 @@
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "connect-multiparty": "^2.0.0",
+    "exports-loader": "^0.6.4",
+    "imports-loader": "^0.7.1",
+    "jquery": "^3.2.1",
     "less": "^2.7.2",
     "masonry-layout": "^4.2.0",
     "materialize-css": "^0.99.0",
@@ -102,6 +105,7 @@
           "avoidQuotes": false
         }
       ],
+      "semi": 2,
       "react/jsx-filename-extension": [
         1,
         {
