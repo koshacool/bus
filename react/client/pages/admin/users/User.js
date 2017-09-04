@@ -16,20 +16,20 @@ const User = (props) => {
       <td>{ email }</td>
       <td>{ role }</td>
       <td>
-        <ModalsManager
-          id={`edit${id.toString()}`}
-          modalName="EditUser"
-          headerName="Are you sure?"
-          trigger="remove"
-          otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}
-        />
-        <ModalsManager
-          id={`remove${id.toString()}`}
-          modalName="Confirm"
-          headerName="Are you sure?"
-          trigger="remove"
-          otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}
-        />
+        {/*<ModalsManager*/}
+          {/*id={`edit${id.toString()}`}*/}
+          {/*modalName="EditUser"*/}
+          {/*headerName="Are you sure?"*/}
+          {/*trigger="remove"*/}
+          {/*otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}*/}
+        {/*/>*/}
+        {/*<ModalsManager*/}
+          {/*id={`remove${id.toString()}`}*/}
+          {/*modalName="Confirm"*/}
+          {/*headerName="Are you sure?"*/}
+          {/*trigger="remove"*/}
+          {/*otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}*/}
+        {/*/>*/}
       </td>
     </tr>
   );

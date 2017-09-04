@@ -102,6 +102,7 @@
           "avoidQuotes": false
         }
       ],
+      "semi": 2,
       "react/jsx-filename-extension": [
         1,
         {
