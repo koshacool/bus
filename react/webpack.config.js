@@ -56,5 +56,11 @@ module.exports = {
         loader: "json-loader"
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
+    })
+  ]
 };

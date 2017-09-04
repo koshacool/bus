@@ -2,27 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import {Button} from 'react-materialize';
+import { Button } from 'react-materialize';
 
 
-const Confirm = ({id, otherProps, closeModal}) => {
+const Confirm = ({ otherProps }) => {
 
-  const onSubmit = () => {
-    otherProps.onConfirm();
-    closeModal();
-  }
+  const { confirm, onConfirm, id } = otherProps;
 
   return (
     <div>
-      <Button modal="close" id={id}>close</Button>
-      <Button onClick={onSubmit}>{otherProps.confirm}</Button>
+      <Button onClick={onConfirm}>{ confirm }</Button>
+      <Button id={`closeModal${id}`} type="button" className="modal-action modal-close">close</Button>
     </div>
   );
 };
 
 Confirm.propTypes = {
   otherProps: PropTypes.object.isRequired,
-  closeModal: PropTypes.func.isRequired,
 };
 
 export default Confirm;

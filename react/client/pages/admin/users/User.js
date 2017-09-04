@@ -8,7 +8,7 @@ import ModalsManager from '../../../components/modalsManager/ModalsManager';
 
 const User = (props) => {
   const { name, email, role, id } = props.user;
-  const { onRemove } = props;
+  const { onRemove, onEdit, router, user } = props;
 
   return (
     <tr>
@@ -16,20 +16,23 @@ const User = (props) => {
       <td>{ email }</td>
       <td>{ role }</td>
       <td>
-        {/*<ModalsManager*/}
-          {/*id={`edit${id.toString()}`}*/}
-          {/*modalName="EditUser"*/}
-          {/*headerName="Are you sure?"*/}
-          {/*trigger="remove"*/}
-          {/*otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}*/}
-        {/*/>*/}
-        {/*<ModalsManager*/}
-          {/*id={`remove${id.toString()}`}*/}
-          {/*modalName="Confirm"*/}
-          {/*headerName="Are you sure?"*/}
-          {/*trigger="remove"*/}
-          {/*otherProps={{ confirm: 'delete', onConfirm: onRemove(id) }}*/}
-        {/*/>*/}
+
+        <ModalsManager
+          id={`editUser${id}`}
+          modalName="AddEditUser"
+          headerName="Edit user"
+          trigger="edit"
+          otherProps={{ confirm: 'create', router, user, onConfirm: onEdit(id) }}
+        />
+
+        <ModalsManager
+          id={`remove${id}`}
+          modalName="Confirm"
+          headerName="Are you sure?"
+          trigger="remove"
+          otherProps={{ confirm: 'delete', id, router, onConfirm: onRemove(id) }}
+        />
+
       </td>
     </tr>
   );
@@ -38,6 +41,8 @@ const User = (props) => {
 User.propTypes = {
   user: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 

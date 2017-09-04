@@ -5,6 +5,7 @@ import { Row, Input, Button } from 'react-materialize';
 
 
 const UserForm = ({
+                    id,
                     roles,
                     name,
                     email,
@@ -12,8 +13,6 @@ const UserForm = ({
                     roleId,
                     onChangeInput,
                     onSubmit,
-                    id,
-                    otherProps,
                   }) => (
   <form onSubmit={onSubmit} className="container">
     <Row>
@@ -57,12 +56,13 @@ const UserForm = ({
             .map(role => <option key={role.id} value={role.id}>{role.name}</option>)
         }
       </Input>
-
+      <Button>save</Button>
+      <Button id={`closeModal${id}`} type="button" className="modal-action modal-close">close</Button>
     </Row>
-    <Button type="button" modal="close" id={id}>close</Button>
-    <Button type="submit">{otherProps.confirm}</Button>
   </form>
 );
+
+UserForm.defaultProps = { id: '' };
 
 UserForm.propTypes = {
   roles: PropTypes.array.isRequired,
@@ -70,10 +70,9 @@ UserForm.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   roleId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  otherProps: PropTypes.object.isRequired,
 };
 
 

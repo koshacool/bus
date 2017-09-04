@@ -56,6 +56,21 @@ export default {
     });
   },
 
+  editUser(id, { name, email, password, roleId }) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/user/update`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        id,
+        name,
+        email,
+        password,
+        roleId,
+      },
+    });
+  },
+
   removeUser(id) {
     return axios({
       method: 'post',

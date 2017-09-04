@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Icon, Modal} from 'react-materialize';
-import {usersList, removeUser} from '../../../api/index';
+import {} from 'react-materialize';
+import {usersList, createUser, removeUser, editUser} from '../../../api/index';
 import checkAuthorized from '../../../utils/userUtils';
 
 import Spinner from '../../../components/spiner/Spinner';
 import User from './User';
 
 import ModalsManager from '../../../components/modalsManager/ModalsManager';
-import $ from 'jquery';
+import closeModal from '../../../components/modalsManager/CloseModal';
 
 /**
  * Make first char in the string to upper case
@@ -32,39 +32,12 @@ class Users extends React.Component {
     this.renderUsers = this.renderUsers.bind(this);
     this.getUsers = this.getUsers.bind(this);
     this.onRemove = this.onRemove.bind(this);
-
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.onAdd = this.onAdd.bind(this);
+    this.onEdit = this.onEdit.bind(this);
   }
 
   componentDidMount() {
     this.getUsers();
-
-    $('.modal').modal();
-    $('#modal1').on('click', () => {
-    });
-  }
-
-  /**
-   * Change status for display modal(hide modal window)
-   * @returns {void}
-   */
-  hideModal() {
-    this.setState({
-      modal: false,
-    });
-  }
-
-  /**
-   * Show modal window by name
-   * @param {string} name Modal window name
-   * @returns {Function}
-   */
-  showModal(name) {
-    return (modalParams = null) => this.setState({
-      modal: ucFirst(name),
-      modalParams,
-    });
   }
 
   onRemove(id) {
@@ -72,7 +45,9 @@ class Users extends React.Component {
 
     return () => {
       removeUser(id)
+        .then(console.log.bind(console))
         .then(this.getUsers)
+        .then(closeModal(id))
         .catch(checkAuthorized.bind(this, push));
     };
   }
@@ -86,29 +61,45 @@ class Users extends React.Component {
       .catch(checkAuthorized.bind(this, push));
   }
 
-  /**
-   * Display modal window for create user
-   *
-   * @returns {XML}
-   */
-  modalAddUser() {
-    const {router} = this.props;
-    const {users, modal, modalParams} = this.state;
-
-    return (<ModalsManager
-      id="addUser"
-      modalName="AddUser"
-      headerName="Add new user"
-      otherProps={{confirm: 'create', router, getUsers: this.getUsers}}
-    />);
+  setEmptyUsers() {
+    this.setState({users: []});
   }
 
+  onAdd(userData) {
+    const {push} = this.props.router;
+
+    createUser(userData)
+      .then(console.log.bind(console))
+      .then(closeModal())
+      .then(this.getUsers)
+      .catch(checkAuthorized.bind(this, push));
+  }
+
+  onEdit(userId) {
+    const {push} = this.props.router;
+
+    return (userData) => {
+      editUser(userId, userData)
+        .then(console.log.bind(console))
+        .then(closeModal(`Edit${userId}`))
+        .then(this.getUsers)
+        .catch(checkAuthorized.bind(this, push));
+    }
+  }
 
   renderUsers() {
     const {users} = this.state;
+    const {router} = this.props;
 
     return users
-      .map(user => <User user={user} key={user.id} onRemove={this.onRemove}/>);
+      .map(user => (<User
+          user={user}
+          key={user.id}
+          onRemove={this.onRemove}
+          onEdit={this.onEdit}
+          router={router}
+        />
+      ));
   }
 
 
@@ -116,17 +107,18 @@ class Users extends React.Component {
     const {router} = this.props;
     const {users, modal, modalParams} = this.state;
     const loading = users.length === 0;
-    let modal1=new Modal($("#yourModal"));
-
-    modal1.open(); //Open it on some event
-
 
     return (
       <div className="container">
         <Spinner loading={loading} className="grid" id="grid">
           <h3> Users: </h3>
-          <Button onClick={this.showModal('addUser')}>add</Button>
-
+          <ModalsManager
+            id="addUser"
+            modalName="AddEditUser"
+            headerName="Add new user"
+            trigger="Add"
+            otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}
+          />
 
           {/* Display registered users*/}
           <table>
@@ -147,19 +139,6 @@ class Users extends React.Component {
 
         </Spinner>
 
-        <a className="waves-effect waves-light btn view" data-target="modal1">View Scores</a>
-
-        <div id="modal1" className="modal">
-          <div className="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
-          </div>
-          <div className="modal-footer">
-            <a href="#!" className=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-          </div>
-        </div>
-
-        {modal && this[`modal${modal}`](modalParams)}
       </div>
     );
   }
