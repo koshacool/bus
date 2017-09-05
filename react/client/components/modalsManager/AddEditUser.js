@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { rolesList } from '../../../api/index';
-import checkAuthorized from '../../../utils/userUtils';
-import UserForm from './UserForm';
+import { rolesList } from '../../api/index';
+import checkAuthorized from '../../utils/userUtils';
+import UserForm from './Forms/UserForm';
 
 class AddUser extends React.Component {
   constructor() {

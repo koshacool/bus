@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 
 import {Modal, Button} from 'react-materialize';
 
-import AddEditUser from './Forms/AddEditUser';
+import AddEditUser from './AddEditUser';
 import Confirm from './Confirm';
 
+import BusStop from './BusStop';
 /**
  * Object with modal components names
  *
@@ -16,6 +17,7 @@ import Confirm from './Confirm';
 const ModalComponents = {
   AddEditUser,
   Confirm,
+  BusStop,
 };
 
 /**

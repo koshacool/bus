@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 
 //Check authrization user for all these queryes
 Route::group(['middleware' => 'jwt.auth'], function () {
+
+    // Routes for work with user account
     Route::get('get/profile', 'AuthController@profile');
     Route::get('get/users', 'AdminController@getUsers');
     Route::get('get/roles', 'AdminController@getRoles');
@@ -24,16 +26,12 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('user/create', 'RegisterController@create');
     Route::post('user/remove', 'RegisterController@remove');
     Route::post('user/update', 'RegisterController@update');
+
+    // Bus stops routes
+
+
+
 });
-
-
-
-
-
-
-
-
-
 
 
 
