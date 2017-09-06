@@ -43,23 +43,23 @@ class BusStops extends React.Component {
 
 
   render() {
-    const { options, blockStyle } = this.getMapParams();
+    const {options, blockStyle, markers} = this.getMapParams();
     const {router} = this.props;
-    const { stops } = this.state;
+    // const {stops} = this.state;
 
 
     return (
       <div className="container">
         <h3> Bus stops: </h3>
-        <ModalsManager
-          id="addStop"
-          modalName="BusStop"
-          headerName="Add new bus stop"
-          trigger="Add"
-          otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}
-        />
+        {/*<ModalsManager*/}
+        {/*id="addStop"*/}
+        {/*modalName="BusStop"*/}
+        {/*headerName="Add new bus stop"*/}
+        {/*trigger="Add"*/}
+        {/*otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}*/}
+        {/*/>*/}
 
-        <Map options={options} blockStyle={blockStyle} markers={stops} />
+        <Map options={options} blockStyle={blockStyle} markers={markers}/>
 
       </div>
     );

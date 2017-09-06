@@ -18,7 +18,7 @@ const renderRoutes = () => (
 
     <Route path="/" component={AppLayout} publicRoutes={publicRoutes} commonRoutes={commonRoutes}>
       <Route path="sign-in" component={SignInPage} />
-      <IndexRoute component={Users} />
+      <IndexRoute component={BusStops} />
 
       <Route path="users" component={Users} />
       <Route path="stops" component={BusStops}/>
