@@ -36,7 +36,7 @@ class ModalsManager extends React.Component {
 
 
   render() {
-    const {id, modalName, headerName, trigger, otherProps, actions} = this.props;
+    const {id, modalName, headerName, trigger, otherProps, actions, modalOptions} = this.props;
 
     // Get component from object by name
     const ModalComponent = ModalComponents[modalName];
@@ -46,7 +46,8 @@ class ModalsManager extends React.Component {
         id={id}
         header={headerName}
         trigger={<Button>{trigger}</Button>}
-        actions=''
+        actions={actions}
+        modalOptions={modalOptions}
       >
 
         <ModalComponent otherProps={otherProps} closeModal={this.closeModal} />
@@ -61,8 +62,9 @@ ModalsManager.propTypes = {
   headerName: PropTypes.string.isRequired,
   trigger: PropTypes.string.isRequired,
   modalName: PropTypes.string.isRequired,
-  actions: PropTypes.node,
+  actions: PropTypes.object,
   otherProps: PropTypes.object,
+  modalOptions: PropTypes.object,
 };
 
 export default ModalsManager;

@@ -18,19 +18,26 @@ class Map extends React.Component {
     this.initMap = this.initMap.bind(this);
     this.addMarkers = this.addMarkers.bind(this);
     this.checkLoadedMapScriptBefore = this.checkLoadedMapScriptBefore.bind(this);
+    this.waitForLoadScript = this.waitForLoadScript.bind(this);
   }
 
   componentDidMount() {
-    // Connect the initMap() function within this class to the global window context,
-    // so Google Maps can invoke it
-    window.initMap = this.initMap;
-
+    // If script isn't loaded in index.html file, load it
     if (!this.checkLoadedMapScriptBefore()) {
-      // Asynchronously load the Google Maps script, passing in the callback reference
-      this.loadJS(`https://maps.googleapis.com/maps/api/js?key=${MY_API_KEY}&callback=initMap`);
-    } else {
-      this.initMap();
+      this.loadJS(`https://maps.googleapis.com/maps/api/js?key=${MY_API_KEY}`);
     }
+
+    this.waitForLoadScript();
+  }
+
+  waitForLoadScript() {
+    const timerId = setInterval(() => {
+      if (window.google !== undefined) {
+        clearInterval(timerId);
+        this.initMap();
+      }
+    }, 100);
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -43,10 +50,15 @@ class Map extends React.Component {
   initMap() {
     const {options} = this.props;
     const google = window.google;
+    const map = new google.maps.Map(this.mapDiv, options);
+
+    google.maps.event.addListener(map, 'resize', () => {
+      console.log('callback');
+    });
 
     // Initial map and save it to component's state
     this.setState({
-      map: new google.maps.Map(this.mapDiv, options),
+      map,
     });
   }
 
@@ -54,14 +66,15 @@ class Map extends React.Component {
     const {map, google} = this.state;
     const {markers} = this.props;
 
-      this.setState({
-        markers: markers.map(markerParams => {
-          markerParams.map = map;
-          let marker = new window.google.maps.Marker(markerParams);
-          marker.addListener('click', () => console.log('working'));
-          return marker;
-        }),
-      });
+    this.setState({
+      markers: markers.map(markerParams => {
+        markerParams.map = map;
+        markerParams.animation = window.google.maps.Animation.DROP;
+        let marker = new window.google.maps.Marker(markerParams);
+        marker.addListener('click', () => console.log('working'));
+        return marker;
+      }),
+    });
 
 
   }
@@ -87,7 +100,7 @@ class Map extends React.Component {
     const {blockStyle} = this.props;
 
     return (
-      <div ref={(map) => this.mapDiv = map } style={blockStyle} />
+      <div ref={(map) => this.mapDiv = map} style={blockStyle}/>
     );
   }
 }

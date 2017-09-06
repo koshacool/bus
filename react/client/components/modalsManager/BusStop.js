@@ -28,7 +28,6 @@ class BusStop extends React.Component {
   }
 
   componentDidMount() {
-
   }
 
   onChangeInput(field) {
@@ -48,17 +47,13 @@ class BusStop extends React.Component {
         center: {lat: 49.554829, lng: 25.590585},
         zoom: 10,
       },
-      blockStyle: {height: '500px', width: '800px'},
-      markers: [{
-        position: {lat: 49.554830, lng: 25.590652},
-        title: 'r',
-      }],
+      blockStyle: {height: '300px', width: '500px'},
     };
   }
 
   render() {
     const {name, address, location, id} = this.state;
-    const { markers, options, blockStyle } = this.getMapParams();
+    const {markers, options, blockStyle} = this.getMapParams();
 
     return (
       <div>
@@ -71,7 +66,10 @@ class BusStop extends React.Component {
           onSubmit={this.onSubmit}
         />
 
-        <Map options={options} markers={markers} blockStyle={blockStyle} />
+        <div className="container">
+          <Map options={options} blockStyle={blockStyle}/>
+        </div>
+
       </div>
     );
   }

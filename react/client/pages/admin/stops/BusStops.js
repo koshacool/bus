@@ -36,7 +36,8 @@ class BusStops extends React.Component {
       blockStyle: {height: '500px', width: '800px'},
       markers: [{
         position: {lat: 49.554829, lng: 25.590585},
-        label: 'R'
+        label: 'R',
+        draggable: true,
       }],
     };
   }
@@ -51,13 +52,15 @@ class BusStops extends React.Component {
     return (
       <div className="container">
         <h3> Bus stops: </h3>
-        {/*<ModalsManager*/}
-        {/*id="addStop"*/}
-        {/*modalName="BusStop"*/}
-        {/*headerName="Add new bus stop"*/}
-        {/*trigger="Add"*/}
-        {/*otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}*/}
-        {/*/>*/}
+
+        <ModalsManager
+          id="addStop"
+          modalName="BusStop"
+          headerName="Add new bus stop"
+          trigger="Add"
+          modalOptions={{ready: (modal, trigger) => console.log('opened')}}
+          otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}
+        />
 
         <Map options={options} blockStyle={blockStyle} markers={markers}/>
 
