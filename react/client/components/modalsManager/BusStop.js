@@ -7,7 +7,8 @@ import checkAuthorized from '../../utils/userUtils';
 import StopForm from './Forms/StopForm';
 import Map from '../map/Map';
 
-import GoogleMap from '../map/GoogleMap';
+import GoogleMap from '../map/InitMap';
+import InitDrawingManager from '../map/InitDrawingManager';
 
 class BusStop extends React.Component {
   constructor() {
@@ -19,13 +20,38 @@ class BusStop extends React.Component {
       location: '',
       id: '',
       googleMap: false,
+      polygon: false,
     };
 
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getMapParams = this.getMapParams.bind(this);
+    this.addMarker = this.addMarker.bind(this);
+    this.saveElement = this.saveElement.bind(this);
+    this.createDrawingManager = this.createDrawingManager.bind(this);
   }
 
+  componentDidMount() {
+  }
+
+  componentDidUpdate() {
+    const {options} = this.getMapParams();
+
+    const {showMap} = this.props.otherProps;
+    const {googleMap} = this.state;
+
+    if (showMap && !googleMap) {
+      GoogleMap(this.mapDiv, options)
+        .then(map => {
+          this.setState({
+            googleMap: map,
+          });
+          return map;
+        })
+        .then(this.createDrawingManager)
+        .catch(console.log.bind(console));
+    }
+  }
 
   onChangeInput(field) {
     return e => this.setState({[field]: e.target.value});
@@ -42,38 +68,61 @@ class BusStop extends React.Component {
     return {
       options: {
         center: {lat: 49.554829, lng: 25.590585},
-        zoom: 10,
+        zoom: 14,
       },
       blockStyle: {height: '300px', width: '500px'},
     };
   }
 
-  componentDidMount() {
+  addMarker(map) {
+    map.addListener('rightclick', (e) => {
+      let {marker} = this.state;
+      // If marker already exist - remove it!
+      if (marker !== false) {
+        marker.setMap(null);
+      }
 
+      marker = new window.google.maps.Marker({
+        position: e.latLng,
+      });
+      map.panTo(e.latLng);
+      marker.setMap(map);
+      this.setState({location: `${e.latLng}`, marker});
+    });
   }
 
-  componentDidUpdate() {
-    const {options} = this.getMapParams();
+  saveElement(elem, type) {
+    this.setState({[type]: elem});
+  }
 
-    const {showMap} = this.props.otherProps;
-    const {googleMap} = this.state;
 
-    if (showMap && !googleMap) {
-      GoogleMap(this.mapDiv, options)
-        .then(map => this.setState({
-          googleMap: map,
-        }))
-        .catch(console.log.bind(console));
-    }
+  createDrawingManager(map) {
+    const drawingManager = InitDrawingManager();
+
+    drawingManager.addListener('polygoncomplete', (newPolygon) => {
+      const {polygon} = this.state;
+      if (polygon !== false) {
+        polygon.setMap(null);
+      }
+      this.saveElement(newPolygon, 'polygon');
+    });
+
+    drawingManager.setMap(map);
+  }
+
+  getCoordinates(polygon) {
+    const points = polygon.getPath().getArray();
+    return points.map(point => {
+      return { lat: point.lat(), lng: point.lng() };
+    });
   }
 
   render() {
     const {name, address, location, id} = this.state;
     const {blockStyle} = this.getMapParams();
-
     const {showMap} = this.props.otherProps;
 
-    // console.log(showMap)
+    console.log(this.state.polygon)
 
     return (
       <div>

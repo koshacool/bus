@@ -1,9 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { googleMapsKey } from '../../../etc/config.json';
 
-const GoogleMap = (mountPoint, options) => {
+const InitMap = (mountPoint, options) => {
 
   const loadJS = function (src) {
     const ref = window.document.getElementsByTagName("script")[0];
@@ -22,7 +21,7 @@ const GoogleMap = (mountPoint, options) => {
   };
 
   if (!checkLoadedMapScriptBefore()) {
-    loadJS(`https://maps.googleapis.com/maps/api/js?key=${googleMapsKey}`);
+    loadJS(`https://maps.googleapis.com/maps/api/js?key=${googleMapsKey}&libraries=drawing`);
   }
 
   const promise = new Promise((resolve, reject) => {
@@ -39,10 +38,10 @@ const GoogleMap = (mountPoint, options) => {
   return promise;
 };
 
-Map.propTypes = {
+InitMap.propTypes = {
   mountPoint: PropTypes.node.isRequired,
   options: PropTypes.object.isRequired,
 };
 
 
-export default GoogleMap;
+export default InitMap;

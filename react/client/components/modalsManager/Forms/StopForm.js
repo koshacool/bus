@@ -31,7 +31,7 @@ const StopForm = ({
         required
       />
       <Input
-        label="Location"
+        label="Make right mouse click on map"
         s={12}
         name="location"
         value={location}

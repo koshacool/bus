@@ -24,7 +24,7 @@ class Map extends React.Component {
   componentDidMount() {
     // If script isn't loaded in index.html file, load it
     if (!this.checkLoadedMapScriptBefore()) {
-      this.loadJS(`https://maps.googleapis.com/maps/api/js?key=${MY_API_KEY}`);
+      this.loadJS(`https://maps.googleapis.com/maps/api/js?key=${MY_API_KEY}&libraries=drawing`);
     }
 
     this.waitForLoadScript();
