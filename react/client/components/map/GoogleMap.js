@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GoogleMap = ({mountPoing, options}) => {
-  const MY_API_KEY = 'AIzaSyAnV1rYA3NJ_yMNCUdyHZDWvbjbGyIB5jU';
+import { googleMapsKey } from '../../../etc/config.json';
+
+const GoogleMap = (mountPoint, options) => {
 
   const loadJS = function (src) {
     const ref = window.document.getElementsByTagName("script")[0];
@@ -13,23 +14,34 @@ const GoogleMap = ({mountPoing, options}) => {
     ref.parentNode.insertBefore(script, ref);
   };
 
-  if (!this.checkLoadedMapScriptBefore()) {
-    loadJS(`https://maps.googleapis.com/maps/api/js?key=${MY_API_KEY}`);
+  const checkLoadedMapScriptBefore = () => {
+    if (document.getElementById('googleMap') === null) {
+      return false;
+    }
+    return true;
+  };
+
+  if (!checkLoadedMapScriptBefore()) {
+    loadJS(`https://maps.googleapis.com/maps/api/js?key=${googleMapsKey}`);
   }
 
-
-  let promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     const timerId = setInterval(() => {
       if (window.google !== undefined) {
         clearInterval(timerId);
         const google = window.google;
-        const map = new google.maps.Map(mountPoing, options);
+        const map = new google.maps.Map(mountPoint, options);
         resolve(map);
       }
     }, 100);
   });
 
   return promise;
+};
+
+Map.propTypes = {
+  mountPoint: PropTypes.node.isRequired,
+  options: PropTypes.object.isRequired,
 };
 
 

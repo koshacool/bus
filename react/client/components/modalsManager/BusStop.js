@@ -7,6 +7,8 @@ import checkAuthorized from '../../utils/userUtils';
 import StopForm from './Forms/StopForm';
 import Map from '../map/Map';
 
+import GoogleMap from '../map/GoogleMap';
+
 class BusStop extends React.Component {
   constructor() {
     super();
@@ -16,6 +18,7 @@ class BusStop extends React.Component {
       address: '',
       location: '',
       id: '',
+      googleMap: false,
     };
 
     this.onChangeInput = this.onChangeInput.bind(this);
@@ -23,12 +26,6 @@ class BusStop extends React.Component {
     this.getMapParams = this.getMapParams.bind(this);
   }
 
-  componentWillMount() {
-    const {otherProps} = this.props;
-  }
-
-  componentDidMount() {
-  }
 
   onChangeInput(field) {
     return e => this.setState({[field]: e.target.value});
@@ -51,9 +48,32 @@ class BusStop extends React.Component {
     };
   }
 
+  componentDidMount() {
+
+  }
+
+  componentDidUpdate() {
+    const {options} = this.getMapParams();
+
+    const {showMap} = this.props.otherProps;
+    const {googleMap} = this.state;
+
+    if (showMap && !googleMap) {
+      GoogleMap(this.mapDiv, options)
+        .then(map => this.setState({
+          googleMap: map,
+        }))
+        .catch(console.log.bind(console));
+    }
+  }
+
   render() {
     const {name, address, location, id} = this.state;
-    const {markers, options, blockStyle} = this.getMapParams();
+    const {blockStyle} = this.getMapParams();
+
+    const {showMap} = this.props.otherProps;
+
+    // console.log(showMap)
 
     return (
       <div>
@@ -67,7 +87,7 @@ class BusStop extends React.Component {
         />
 
         <div className="container">
-          <Map options={options} blockStyle={blockStyle}/>
+          {showMap && <div ref={(map) => this.mapDiv = map} style={blockStyle}/>}
         </div>
 
       </div>

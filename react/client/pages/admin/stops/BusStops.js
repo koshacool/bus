@@ -6,6 +6,7 @@ import Map from '../../../components/map/Map';
 
 import ModalsManager from '../../../components/modalsManager/ModalsManager';
 import closeModal from '../../../components/modalsManager/CloseModal';
+import GoogleMap from "../../../components/map/GoogleMap";
 
 
 /**
@@ -24,7 +25,13 @@ class BusStops extends React.Component {
 
     this.state = {
       stops: [],
+      googleMap: null,
+      markers: null,
+      showModalMap: false,
     };
+
+    this.showMarkers = this.showMarkers.bind(this);
+    this.showModalMap = this.showModalMap.bind(this);
   }
 
   getMapParams() {
@@ -42,12 +49,42 @@ class BusStops extends React.Component {
     };
   }
 
+  showMarkers(googleMap) {
+    const {markers} = this.getMapParams();
+    // const {markers} = this.props;
+
+    return markers.map(markerParams => {
+      markerParams.map = googleMap;
+      markerParams.animation = window.google.maps.Animation.DROP;
+      let marker = new window.google.maps.Marker(markerParams);
+      marker.addListener('click', () => console.log('working'));
+      return marker;
+    });
+
+
+  }
+
+  showModalMap() {
+    this.setState({showModalMap: true});
+  }
+
+  componentDidMount() {
+    const {options} = this.getMapParams();
+
+    GoogleMap(this.mapDiv, options)
+      .then(map => this.setState({
+        googleMap: map,
+        markers: this.showMarkers(map),
+      }))
+      .catch(console.log.bind(console));
+
+  }
+
 
   render() {
-    const {options, blockStyle, markers} = this.getMapParams();
+    const {blockStyle} = this.getMapParams();
     const {router} = this.props;
-    // const {stops} = this.state;
-
+    const {showModalMap} = this.state;
 
     return (
       <div className="container">
@@ -58,12 +95,12 @@ class BusStops extends React.Component {
           modalName="BusStop"
           headerName="Add new bus stop"
           trigger="Add"
-          modalOptions={{ready: (modal, trigger) => console.log('opened')}}
-          otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}
+          modalOptions={{ready: this.showModalMap}}
+          otherProps={{confirm: 'create', router, onConfirm: this.onAdd, showMap: showModalMap}}
         />
 
-        <Map options={options} blockStyle={blockStyle} markers={markers}/>
 
+        <div ref={(map) => this.mapDiv = map} style={blockStyle}/>
       </div>
     );
   }

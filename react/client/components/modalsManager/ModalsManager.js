@@ -46,7 +46,7 @@ class ModalsManager extends React.Component {
         id={id}
         header={headerName}
         trigger={<Button>{trigger}</Button>}
-        actions={actions}
+        actions=''
         modalOptions={modalOptions}
       >
 
@@ -64,7 +64,6 @@ ModalsManager.propTypes = {
   modalName: PropTypes.string.isRequired,
   actions: PropTypes.object,
   otherProps: PropTypes.object,
-  modalOptions: PropTypes.object,
 };
 
 export default ModalsManager;
