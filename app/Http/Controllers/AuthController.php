@@ -28,8 +28,11 @@ class AuthController extends Controller
             return response()->json(['status' => 'error', 'error' => 'could_not_create_token'], 500);
         }
 
+        $authUser = JWTAuth::toUser($token);
+        $role = $authUser->role()->get();
+
         // All good so return the token
-        return response()->json(['status' => 'ok', 'token' => $token]);
+        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0] ]);
     }
 
     public function refresh()
@@ -46,7 +49,11 @@ class AuthController extends Controller
         } catch (TokenInvalidException $e) {
             return response()->json(['status' => 'error', 'error' => 'invalid_credentials'], 401);
         }
-        return response()->json(['status' => 'ok', 'token' => $token]);
+
+        $authUser = JWTAuth::parseToken()->authenticate();
+        $role = $authUser->role()->get();
+
+        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0] ]);
     }
 
     public function profile()
