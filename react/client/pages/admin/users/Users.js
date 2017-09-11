@@ -117,7 +117,7 @@ class Users extends React.Component {
             modalName="AddEditUser"
             headerName="Add new user"
             trigger="Add"
-            otherProps={{confirm: 'create', router, onConfirm: this.onAdd}}
+            otherProps={{router, onConfirm: this.onAdd}}
           />
 
           {/* Display registered users*/}

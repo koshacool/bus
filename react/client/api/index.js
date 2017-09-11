@@ -82,6 +82,19 @@ export default {
     });
   },
 
+  createBusStop({ name, address, location }) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/stop/create`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        name,
+        address,
+        location,
+      },
+    });
+  },
+
 
   // createPhotos(filesObj, type, photosessionId) {
   //   return new Promise((resolve, reject) => {

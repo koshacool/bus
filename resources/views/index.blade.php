@@ -20,6 +20,9 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
+        {{--<!-- Load google maps -->--}}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnV1rYA3NJ_yMNCUdyHZDWvbjbGyIB5jU&libraries=drawing" id="googleMap"></script>
+
         {{--Load builded js script--}}
         <script type="text/javascript" src="{{ asset('js/build/bundle.js') }}"></script>
     </body>

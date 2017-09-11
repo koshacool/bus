@@ -32,7 +32,6 @@ class AuthController extends Controller
         return response()->json(['status' => 'ok', 'token' => $token]);
     }
 
-
     public function refresh()
     {
         $token = JWTAuth::getToken();
@@ -60,10 +59,6 @@ class AuthController extends Controller
 
         return response()->json($user);
     }
-
-
-
-
 
     public function logout()
     {

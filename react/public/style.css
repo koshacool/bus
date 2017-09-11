@@ -1,14 +1,25 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+
+    min-height: 100%;
+    position: relative;
+    /*flex-direction: column;*/
 }
 button {
     margin-left: 10px;
 }
 
 main {
-    flex: 1 0 auto;
+    padding-bottom:160px;
+}
+
+.content {
+    min-height: 100vh;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 nav ul a, nav .brand-logo {
