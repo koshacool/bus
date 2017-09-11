@@ -15,7 +15,7 @@ const OperatorHeader = ({ logout }) => (
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/video">Video</Link>
+      <Link to="/operator/video">Video</Link>
     </NavItem>
     <NavItem className="grey-text text-darken-4 right">
       <Link to="/keys">Hot KEYS</Link>

@@ -6,8 +6,9 @@ import SignInPage from './pages/auth/SignInPage';
 
 import Admin from './pages/admin/Admin';
 import Users from './pages/admin/users/Users';
-
 import BusStops from './pages/admin/stops/BusStops';
+
+import Video from './pages/operator/Video';
 
 const publicRoutes = ['/sign-in'];
 const commonRoutes = ['/not-found'];
@@ -17,14 +18,16 @@ const renderRoutes = () => (
   <Router history={browserHistory}>
 
     <Route path="/" component={AppLayout} publicRoutes={publicRoutes} commonRoutes={commonRoutes}>
-      <IndexRoute component={BusStops} />
+      <IndexRoute component={Video} />
       <Route path="sign-in" component={SignInPage} />
 
 
       <Route path="users" component={Users} />
       <Route path="stops" component={BusStops}/>
-      {/*<Route path="routes" component={BusRoutes}/>*/}
-      {/*<Route path="firms" component={Firms}/>*/}
+
+      <Route path="operator/video" component={Video}/>
+
+      {/*<Route path="firms" component={Video}/>*/}
 
     </Route>
 
