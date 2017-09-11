@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Tabs, Tab} from 'react-materialize';
 
-import AdminHeader from './AdminHeader';
+import AdminHeader from '../../layouts/Header/Admin';
 import SiteFooter from '../../layouts/SiteFooter';
 
 import Alert from 'react-s-alert';
