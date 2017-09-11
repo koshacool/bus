@@ -28,7 +28,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('user/update', 'RegisterController@update');
 
     // Bus stops routes
-
+    Route::post('stop/create', 'BusStopsController@create');
 
 
 });

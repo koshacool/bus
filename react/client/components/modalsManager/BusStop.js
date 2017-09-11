@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {rolesList} from '../../api/index';
+import {createBusStop} from '../../api/index';
 import checkAuthorized from '../../utils/userUtils';
 
 import StopForm from './Forms/StopForm';
 import Map from '../map/Map';
-
+import closeModal from './CloseModal';
 import GoogleMap from '../map/InitMap';
 import InitDrawingManager from '../map/InitDrawingManager';
 
@@ -17,21 +17,19 @@ class BusStop extends React.Component {
     this.state = {
       name: '',
       address: '',
-      location: '',
       id: '',
       googleMap: false,
       polygon: false,
     };
 
+    this.initialState = this.initialState.bind(this);
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getMapParams = this.getMapParams.bind(this);
     this.addMarker = this.addMarker.bind(this);
-    this.saveElement = this.saveElement.bind(this);
+    this.saveMapElement = this.saveMapElement.bind(this);
     this.createDrawingManager = this.createDrawingManager.bind(this);
-  }
-
-  componentDidMount() {
+    this.getCoordinates = this.getCoordinates.bind(this);
   }
 
   componentDidUpdate() {
@@ -59,9 +57,15 @@ class BusStop extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const {otherProps} = this.props;
 
-    console.log('submit');
+    const {name, address, polygon} = this.state;
+    const location = JSON.stringify(this.getCoordinates(polygon));
+
+    createBusStop({name, address, location})
+      .then(console.log.bind(console))
+      .then(closeModal())
+      .then(this.setState(this.initialState()))
+      .catch(console.log.bind(console));
   }
 
   getMapParams() {
@@ -72,6 +76,28 @@ class BusStop extends React.Component {
       },
       blockStyle: {height: '300px', width: '500px'},
     };
+  }
+
+  getCoordinates(polygon) {
+    const points = polygon.getPath().getArray();
+    return points.map(point => {
+      return {lat: point.lat(), lng: point.lng()};
+    });
+  }
+
+  createDrawingManager(map) {
+    const drawingManager = InitDrawingManager();
+
+    drawingManager.addListener('polygoncomplete', (newPolygon) => {
+      this.resetPolygon();
+      this.saveMapElement(newPolygon, 'polygon');
+    });
+
+    drawingManager.setMap(map);
+  }
+
+  saveMapElement(elem, type) {
+    this.setState({ [type]: elem });
   }
 
   addMarker(map) {
@@ -91,38 +117,27 @@ class BusStop extends React.Component {
     });
   }
 
-  saveElement(elem, type) {
-    this.setState({[type]: elem});
+  resetPolygon() {
+    const {polygon} = this.state;
+    if (polygon !== false) {
+      polygon.setMap(null);
+    }
   }
 
-
-  createDrawingManager(map) {
-    const drawingManager = InitDrawingManager();
-
-    drawingManager.addListener('polygoncomplete', (newPolygon) => {
-      const {polygon} = this.state;
-      if (polygon !== false) {
-        polygon.setMap(null);
-      }
-      this.saveElement(newPolygon, 'polygon');
-    });
-
-    drawingManager.setMap(map);
-  }
-
-  getCoordinates(polygon) {
-    const points = polygon.getPath().getArray();
-    return points.map(point => {
-      return { lat: point.lat(), lng: point.lng() };
-    });
+  initialState() {
+    this.resetPolygon();
+    return {
+      name: '',
+      address: '',
+      polygon: false,
+      id: '',
+    };
   }
 
   render() {
-    const {name, address, location, id} = this.state;
+    const {name, address, polygon, id} = this.state;
     const {blockStyle} = this.getMapParams();
     const {showMap} = this.props.otherProps;
-
-    console.log(this.state.polygon)
 
     return (
       <div>
@@ -130,7 +145,7 @@ class BusStop extends React.Component {
           id={id}
           name={name}
           address={address}
-          location={location}
+          polygon={polygon !== false}
           onChangeInput={this.onChangeInput}
           onSubmit={this.onSubmit}
         />
