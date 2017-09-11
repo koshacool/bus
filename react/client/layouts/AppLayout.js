@@ -9,6 +9,8 @@ import Spinner from '../components/spiner/Spinner';
 import SiteFooter from './SiteFooter';
 import Header from './Header';
 
+import {checkUserToken} from '../api/index';
+import handleErrors from '../utils/handleErrors';
 
 const ALERTS_LIMIT = 5;
 
@@ -48,24 +50,46 @@ class AppLayout extends React.Component {
     const {router, route} = newProps;
     const {publicRoutes, commonRoutes} = route;
 
-    //Check exist user token
-    const isLoggedIn = sessionStorage.getItem('token') != 'null';
+    const token = sessionStorage.getItem('token');
 
-    const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
-
-    if (!isCommonRoute) {
-      const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
-
-      //If user logged redirect to base directory
-      if (isPublicRoute && isLoggedIn) {
-        redirectTo(router, '/');
-
-        //If user isn't logged redirect to login page
-      } else if (!isPublicRoute && !isLoggedIn) {
-        redirectTo(router, '/sign-in');
-      }
+    if (token == 'null' || token == 'undefined') {
+      redirectTo(router, '/sign-in');
+      return;
     }
+    this.checkToken(newProps);
+
   }
+
+  checkToken(props) {
+    const {router, route} = props;
+    const {publicRoutes, commonRoutes} = route;
+
+    checkUserToken()
+      .then(res => {
+        if (res.data.status === 'error') {
+          sessionStorage.setItem('token', null);
+          handleErrors(res);
+          redirectTo(router, '/sign-in');
+        } else if (res.data.status === 'ok') {
+          sessionStorage.setItem('token', res.data.token);
+          console.log(res.data)
+
+          const isLoggedIn = true;
+          const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
+
+          if (!isCommonRoute) {
+            const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
+
+            if (!isPublicRoute && !isLoggedIn) {
+              redirectTo(router, '/sign-in');
+            }
+          }
+        }
+
+      })
+      .catch(e => handleErrors(e));
+  }
+
 
   render() {
     const {children, router} = this.props;

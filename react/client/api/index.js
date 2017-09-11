@@ -12,6 +12,16 @@ export default {
     });
   },
 
+  checkUserToken() {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/refresh`,
+      params: {
+        token: sessionStorage.getItem('token'),
+      },
+    });
+  },
+
   userInfo() {
     return axios({
       method: 'get',

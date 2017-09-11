@@ -17,8 +17,9 @@ const renderRoutes = () => (
   <Router history={browserHistory}>
 
     <Route path="/" component={AppLayout} publicRoutes={publicRoutes} commonRoutes={commonRoutes}>
-      <Route path="sign-in" component={SignInPage} />
       <IndexRoute component={BusStops} />
+      <Route path="sign-in" component={SignInPage} />
+
 
       <Route path="users" component={Users} />
       <Route path="stops" component={BusStops}/>
