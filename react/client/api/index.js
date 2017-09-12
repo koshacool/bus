@@ -1,5 +1,4 @@
 import axios from 'axios';
-import request from 'superagent';
 import {apiPrefix} from '../../etc/config.json';
 
 

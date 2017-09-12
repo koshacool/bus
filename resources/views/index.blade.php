@@ -11,6 +11,9 @@
 
         <!-- Import manual styles -->
         <link href='{{ asset('css/style.css') }}' rel='stylesheet' type='text/css'>
+
+        <!-- Import react-video styles -->
+        <link rel="stylesheet" href="https://video-react.github.io/assets/video-react.css" />
     </head>
     <body>
         {{--Point to mount react components--}}
