@@ -124,7 +124,10 @@ class AppLayout extends React.Component {
         }
 
       })
-      .catch(e => handleErrors(e));
+      .catch(e => {
+        redirectTo(router, '/sign-in');
+        handleErrors(e);
+      });
   }
 
   isLoggedIn() {
@@ -140,7 +143,6 @@ class AppLayout extends React.Component {
   render() {
     const {children, router} = this.props;
     const {isLogged, role} = this.state;
-    console.log(isLogged, role);
 
     return (
       <div className="wrapper">

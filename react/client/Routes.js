@@ -8,7 +8,7 @@ import Admin from './pages/admin/Admin';
 import Users from './pages/admin/users/Users';
 import BusStops from './pages/admin/stops/BusStops';
 
-import Video from './pages/operator/Video';
+import Video from './pages/operator/video/Video';
 
 const publicRoutes = ['/sign-in'];
 const commonRoutes = ['/not-found'];

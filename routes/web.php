@@ -24,12 +24,19 @@ Route::middleware(['cors'])->group(function () {
     Route::post('/sign-in', "AuthController@authenticate");
     Route::post('/refresh', "AuthController@refresh");
 
+    //Show SPA
+
     Route::get('/', function () {
         return view('index');
     });
 
-//Show SPA
-    Route::any('{all}', function () {
+    Route::any('/{all}', function () {
         return view('index');
     });
+
+    Route::get('/operator/{all}', function () {
+        return view('index');
+    });
+
+
 });
