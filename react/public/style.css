@@ -75,7 +75,9 @@ nav ul a, nav .brand-logo {
 .videoComment {
     width: 100%;
 }
-
+.key-desc {
+    color: red;
+}
 
 
 

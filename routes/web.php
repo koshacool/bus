@@ -30,6 +30,10 @@ Route::middleware(['cors'])->group(function () {
         return view('index');
     });
 
+    Route::get('/operator', function () {
+        return view('index');
+    });
+
     Route::any('/{all}', function () {
         return view('index');
     });
