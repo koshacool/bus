@@ -11,23 +11,23 @@ const AdminHeader = ({ logout }) => (
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right" href='/admin/users'>
-      <Link to="/users">Users</Link>
+      <Link to="/admin/users">Users</Link>
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/stops">Stops</Link>
+      <Link to="/admin/stops">Stops</Link>
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/routes">Routes</Link>
+      <Link to="/admin/routes">Routes</Link>
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/firms">Firms</Link>
+      <Link to="/admin/firms">Firms</Link>
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/buses">Buses</Link>
+      <Link to="/admin/buses">Buses</Link>
     </NavItem>
   </div>
 );

@@ -9,6 +9,7 @@ import Map from '../map/Map';
 import closeModal from './CloseModal';
 import GoogleMap from '../map/InitMap';
 import InitDrawingManager from '../map/InitDrawingManager';
+import {onError} from '../../utils/handleResponse';
 
 class BusStop extends React.Component {
   constructor() {
@@ -47,7 +48,7 @@ class BusStop extends React.Component {
           return map;
         })
         .then(this.createDrawingManager)
-        .catch(console.log.bind(console));
+        .catch(onError);
     }
   }
 
@@ -65,7 +66,7 @@ class BusStop extends React.Component {
       .then(console.log.bind(console))
       .then(closeModal())
       .then(this.setState(this.initialState()))
-      .catch(console.log.bind(console));
+      .catch(onError);
   }
 
   getMapParams() {

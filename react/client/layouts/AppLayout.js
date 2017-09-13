@@ -11,14 +11,32 @@ import AuthNavigation from './Header/AuthNavigation';
 import PublicNavigation from './Header/PublicNavigation';
 
 import {checkUserToken} from '../api/index';
-import handleErrors from '../utils/handleErrors';
+import {onError} from '../utils/handleResponse';
 
 const ALERTS_LIMIT = 5;
 
-const isCurrentRouteOneOf = (router, routes) => routes.some(publicRoute => router.isActive({
-  pathname: publicRoute,
-}, true));
 
+/**
+ * Check if one of array's routes is active now.
+ *
+ * @param {object} router React router object
+ * @param {array} routes Array with routes
+ *
+ * @return {boolean}
+ */
+const isCurrentRouteOneOf = (router, routes) =>
+  routes.some(route => router.isActive({ pathname: route }, true));
+
+
+/**
+ * Check active url with new url.
+ * If it isn't the same path - redirect. *
+ *
+ * @param {object} router React router object
+ * @param {string} pathname Url to redirect
+ *
+ * @return {void}
+ */
 const redirectTo = (router, pathname) => {
   if (!router.isActive(pathname, true)) {
     router.push(pathname);
@@ -38,6 +56,7 @@ class AppLayout extends React.Component {
     this.state = {
       isLogged: false,
       role: '',
+      isPublicRoute: true,
     };
 
     this.checkAuthRoutes = this.checkAuthRoutes.bind(this);
@@ -57,92 +76,77 @@ class AppLayout extends React.Component {
   logout() {
     const {router} = this.props;
 
-
     sessionStorage.setItem('token', null);
     sessionStorage.setItem('role', null);
 
     this.setState({
       isLogged: false,
       role: '',
+      isPublicRoute: true,
     });
 
     redirectTo(router, '/sign-in');
   }
 
-  checkAuthRoutes(newProps) {
-    const {router, route} = newProps;
+  checkAuthRoutes({router, route}) {
     const {publicRoutes, commonRoutes} = route;
-
     const token = sessionStorage.getItem('token');
+    const role = sessionStorage.getItem('role');
+    const isLoggedIn = this.isLoggedIn(token);
+    const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
+    const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
 
-    if (token == 'null' || token == 'undefined') {
-      redirectTo(router, '/sign-in');
-      return;
+    if (!isCommonRoute && !isPublicRoute) {
+      if (!isLoggedIn) {
+        this.logout();
+        return;
+      }
+
+      this.checkToken(router, token);
     }
-
-    this.checkToken(newProps);
-
   }
 
-  checkToken(props) {
-    const {router, route} = props;
-    const {publicRoutes, commonRoutes} = route;
-    const {isLogged} = this.state;
-
-    checkUserToken()
+  checkToken(router, token) {
+    checkUserToken(token)
       .then(res => {
         if (res.data.status === 'error') {
-          sessionStorage.setItem('token', null);
-          sessionStorage.setItem('role', null);
-          handleErrors(res);
-          redirectTo(router, '/sign-in');
-
+          onError(res);
+          this.logout();
           return;
-        } else if (res.data.status === 'ok') {
-          sessionStorage.setItem('token', res.data.token);
-          sessionStorage.setItem('role', res.data.role.name);
-
-          const isLoggedIn = true;
-          const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
-
-          if (!isCommonRoute) {
-            const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
-
-            if (!isPublicRoute && !isLoggedIn) {
-              redirectTo(router, '/sign-in');
-              return;
-            }
-
-            // redirectTo(router, '/');
-
-
-            if (!isLogged) {
-              this.setState({isLogged: true, role: res.data.role.name});
-            }
-
-          }
         }
 
+        sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('role', res.data.role.name);
+
+        return res;
+      })
+      .then(res => {
+        if (!this.state.isLogged) {
+          this.setState({
+            isLogged: true,
+            role: res.data.role.name,
+            isPublicRoute: false,
+          });
+          redirectTo(router, `/${res.data.role.name}`);
+        }
       })
       .catch(e => {
-        redirectTo(router, '/sign-in');
-        handleErrors(e);
+        this.logout();
+        onError(e);
       });
   }
 
-  isLoggedIn() {
-    const role = sessionStorage.getItem('role');
-
-    if (role == 'null' || role == 'undefined') {
+  isLoggedIn(token) {
+    if (!token) {
       return false;
     }
 
-    return role;
+    return true;
   }
 
   render() {
     const {children, router} = this.props;
-    const {isLogged, role} = this.state;
+    const {isLogged, role, isPublicRoute} = this.state;
 
     return (
       <div className="wrapper">
@@ -156,7 +160,7 @@ class AppLayout extends React.Component {
 
         <main className="grey lighten-3">
           <div className="content">
-            {children}
+            {(isPublicRoute || isLogged) && children}
           </div>
         </main>
 
@@ -171,6 +175,7 @@ class AppLayout extends React.Component {
 
 AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 

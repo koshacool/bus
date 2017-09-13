@@ -7,6 +7,7 @@ import Map from '../../../components/map/Map';
 import ModalsManager from '../../../components/modalsManager/ModalsManager';
 import closeModal from '../../../components/modalsManager/CloseModal';
 import GoogleMap from "../../../components/map/InitMap";
+import {onError} from '../../../utils/handleResponse';
 
 
 /**
@@ -76,7 +77,7 @@ class BusStops extends React.Component {
         googleMap: map,
         markers: this.showMarkers(map),
       }))
-      .catch(console.log.bind(console));
+      .catch(onError);
 
   }
 

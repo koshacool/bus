@@ -4,7 +4,7 @@ import Alert from 'react-s-alert';
 const errorKeys = ['reason', 'error', 'message'];
 
 const alertOptions = {
-  timeout: 5000,
+  timeout: 4000,
   effect: 'genie',
 };
 
@@ -18,8 +18,8 @@ const getErrorMessage = (error) => {
 
   const errorKey = getErrorKey(error);
 
-  if (errorKey && error.data[errorKey]) {
-    return `${error.data[errorKey]}, status: ${error.status}`;
+  if (errorKey) {
+    return `${error.status}:${error.statusText}, ${error.data.error} `;
   }
 
   return (typeof error === 'string' && error) || 'Unspecified error';
@@ -38,7 +38,7 @@ export const showError = error => {
 
 export const showSuccess = message => {
   console.log(message);
-  Alert.success(message, alertOptions);
+  Alert.success(`status: ${message.status}, text: ${message.statusText}`, alertOptions);
 };
 
 

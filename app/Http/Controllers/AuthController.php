@@ -50,7 +50,7 @@ class AuthController extends Controller
             return response()->json(['status' => 'error', 'error' => 'invalid_credentials'], 401);
         }
 
-        $authUser = JWTAuth::parseToken()->authenticate();
+        $authUser = JWTAuth::toUser($token);
         $role = $authUser->role()->get();
 
         return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0] ]);
