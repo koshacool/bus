@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { rolesList } from '../../api/index';
-import {onError} from '../../utils/handleResponse';
 import UserForm from './Forms/UserForm';
 
 class AddUser extends React.Component {
@@ -14,7 +12,6 @@ class AddUser extends React.Component {
       email: '',
       password: '',
       roleId: '2',
-      roles: [],
       id: '',
     };
 
@@ -23,12 +20,11 @@ class AddUser extends React.Component {
   }
 
   componentWillMount() {
-    const {otherProps} = this.props;
+    const { otherProps } = this.props;
 
     // Set default values for edit user form
     if (otherProps && otherProps.user) {
-      const {user} = otherProps;
-
+      const { user } = otherProps;
 
       this.setState({
         name: user.name,
@@ -39,30 +35,20 @@ class AddUser extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const {otherProps} = this.props;
-    const {router, onConfirm} = otherProps;
-
-    // Get all roles
-    rolesList()
-      .then(res => this.setState({roles: res.data}))
-      .catch(onError);
-  }
-
   onChangeInput(field) {
     return e => this.setState({ [field]: e.target.value });
   }
 
   onSubmit(e) {
     e.preventDefault();
-    const {otherProps} = this.props;
+    const { otherProps } = this.props;
 
     otherProps.onConfirm(this.state);
   }
 
   render() {
-    const {name, email, password, roleId, roles, id} = this.state;
-
+    const { name, email, password, roleId, id } = this.state;
+    const { roles } = this.props.otherProps;
 
     return (
       <div>
@@ -80,10 +66,11 @@ class AddUser extends React.Component {
     );
   }
 
-};
+}
 
 AddUser.propTypes = {
   otherProps: PropTypes.object.isRequired,
+  // roles: PropTypes.array.isRequired,
   // closeModal: PropTypes.func.isRequired,
 };
 

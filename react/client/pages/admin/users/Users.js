@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {} from 'react-materialize';
-import {usersList, createUser, removeUser, editUser} from '../../../api/index';
+import {usersList, createUser, removeUser, editUser, rolesList} from '../../../api/index';
 import {onError} from '../../../utils/handleResponse';
 
 import Spinner from '../../../components/spiner/Spinner';
@@ -25,12 +25,14 @@ class Users extends React.Component {
 
     this.state = {
       users: [],
+      roles: [],
       modal: false,
       modalParams: null,
     };
 
     this.renderUsers = this.renderUsers.bind(this);
     this.getUsers = this.getUsers.bind(this);
+    this.getRoles = this.getRoles.bind(this);
     this.onRemove = this.onRemove.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onEdit = this.onEdit.bind(this);
@@ -38,6 +40,7 @@ class Users extends React.Component {
 
   componentDidMount() {
     this.getUsers();
+    this.getRoles();
   }
 
   onRemove(id) {
@@ -50,19 +53,6 @@ class Users extends React.Component {
         .then(closeModal(id))
         .catch(onError);
     };
-  }
-
-  getUsers() {
-    const {push} = this.props.router;
-
-    // Get all users
-    usersList()
-      .then(res => this.setState({users: res.data}))
-      .catch(onError);
-  }
-
-  setEmptyUsers() {
-    this.setState({users: []});
   }
 
   onAdd(userData) {
@@ -87,9 +77,27 @@ class Users extends React.Component {
     }
   }
 
+  setEmptyUsers() {
+    this.setState({users: []});
+  }
+
+  getUsers() {
+    // Get all users
+    usersList()
+      .then(res => this.setState({ users: res.data }))
+      .catch(onError);
+  }
+
+  getRoles() {
+    // Get all roles
+    rolesList()
+      .then(res => this.setState({roles: res.data}))
+      .catch(onError);
+  }
+
   renderUsers() {
-    const {users} = this.state;
-    const {router} = this.props;
+    const { users, roles } = this.state;
+    const { router } = this.props;
 
     return users
       .map(user => (<User
@@ -98,14 +106,15 @@ class Users extends React.Component {
           onRemove={this.onRemove}
           onEdit={this.onEdit}
           router={router}
+          roles={roles}
         />
       ));
   }
 
 
   render() {
-    const {router} = this.props;
-    const {users, modal, modalParams} = this.state;
+    const { router } = this.props;
+    const { users, roles } = this.state;
     const loading = users.length === 0;
 
     return (
@@ -117,7 +126,7 @@ class Users extends React.Component {
             modalName="AddEditUser"
             headerName="Add new user"
             trigger="Add"
-            otherProps={{router, onConfirm: this.onAdd}}
+            otherProps={{ router, onConfirm: this.onAdd, roles }}
           />
 
           {/* Display registered users*/}

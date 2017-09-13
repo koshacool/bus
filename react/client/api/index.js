@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {apiPrefix} from '../../etc/config.json';
-// import checkAuthorized from '../utils/userUtils';
-import {onSuccess} from '../utils/handleResponse';
+
+import { apiPrefix } from '../../etc/config.json';
+import { onSuccess } from '../utils/handleResponse';
 
 
 export default {

@@ -4,7 +4,7 @@ import Alert from 'react-s-alert';
 const errorKeys = ['reason', 'error', 'message'];
 
 const alertOptions = {
-  timeout: 6000,
+  timeout: 4000,
   effect: 'genie',
 };
 

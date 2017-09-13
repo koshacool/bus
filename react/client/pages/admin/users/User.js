@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Icon} from 'react-materialize';
 
 import {usersList} from '../../../api/index';
 import Spinner from '../../../components/spiner/Spinner';
@@ -8,7 +7,7 @@ import ModalsManager from '../../../components/modalsManager/ModalsManager';
 
 const User = (props) => {
   const { name, email, role, id } = props.user;
-  const { onRemove, onEdit, router, user } = props;
+  const { onRemove, onEdit, router, user, roles } = props;
 
   return (
     <tr>
@@ -22,7 +21,7 @@ const User = (props) => {
           modalName="AddEditUser"
           headerName="Edit user"
           trigger="edit"
-          otherProps={{ confirm: 'create', router, user, onConfirm: onEdit(id) }}
+          otherProps={{ confirm: 'create', router, user, onConfirm: onEdit(id), roles }}
         />
 
         <ModalsManager
@@ -43,6 +42,7 @@ User.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired,
+  roles: PropTypes.array.isRequired,
 };
 
 
