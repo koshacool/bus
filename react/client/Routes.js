@@ -18,16 +18,19 @@ const renderRoutes = () => (
   <Router history={browserHistory}>
 
     <Route path="/" component={AppLayout} publicRoutes={publicRoutes} commonRoutes={commonRoutes}>
-      <IndexRoute component={Video} />
+      <IndexRoute component={SignInPage} />
       <Route path="sign-in" component={SignInPage} />
 
+      <Route path="admin">
+        <IndexRoute component={Users} />
+        <Route path="users" component={Users} />
+        <Route path="stops" component={BusStops} />
+      </Route>
 
-      <Route path="users" component={Users} />
-      <Route path="stops" component={BusStops}/>
-
-      <Route path="operator/video" component={Video}/>
-
-      {/*<Route path="firms" component={Video}/>*/}
+      <Route path="operator">
+        <IndexRoute component={Video} />
+        <Route path="video" component={Video} />
+      </Route>
 
     </Route>
 
@@ -36,12 +39,3 @@ const renderRoutes = () => (
 );
 
 export default renderRoutes;
-// {/*<Route path="/admin" component={Admin}>*/}
-// {/*<IndexRoute component={Users}/>*/}
-//
-// {/*<Route path="users" component={Users}/>*/}
-// {/*/!*<Route path="stops" component={BusStop}/>*!/*/}
-// {/*/!*<Route path="routes" component={BusRoutes}/>*!/*/}
-// {/*/!*<Route path="firms" component={Firms}/>*!/*/}
-// {/*/!*<Route path="buses" component={Buses}/>*!/*/}
-// {/*</Route>*/}

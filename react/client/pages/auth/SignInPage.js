@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import { apiPrefix } from '../../../etc/config.json';
-import handleErrors from '../../utils/handleErrors';
-import { authorization } from '../../api/index';
+import {Row, Input, Icon, Button} from 'react-materialize';
 
-import { Row, Input, Icon, Button } from 'react-materialize';
+import {onError} from '../../utils/handleResponse';
+import {authorization} from '../../api/index';
 
 
 class SignInPage extends React.Component {
@@ -32,17 +29,21 @@ class SignInPage extends React.Component {
 
     authorization(email, password)
       .then(res => {
-        console.log(res);
         sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('role', res.data.role.name);
+
+        return res;
       })
-      .then(() => router.push('/'))
-      .catch(e => handleErrors(e));
+      .then((res) => {
+        setTimeout(router.push(`/${res.data.role.name}`), 100);
+      })
+      .catch(onError);
 
   }
 
 
   render() {
-    const { email, password } = this.state;
+    const {email, password} = this.state;
 
     return (
       <div className="container vertical-center">

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { rolesList } from '../../api/index';
-import checkAuthorized from '../../utils/userUtils';
+import {onError} from '../../utils/handleResponse';
 import UserForm from './Forms/UserForm';
 
 class AddUser extends React.Component {
@@ -46,7 +46,7 @@ class AddUser extends React.Component {
     // Get all roles
     rolesList()
       .then(res => this.setState({roles: res.data}))
-      .catch(checkAuthorized.bind(this, router.push));
+      .catch(onError);
   }
 
   onChangeInput(field) {

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {apiPrefix} from '../../etc/config.json';
+// import checkAuthorized from '../utils/userUtils';
+import {onSuccess} from '../utils/handleResponse';
 
 
 export default {
@@ -8,7 +10,8 @@ export default {
     return axios.post(`${apiPrefix}/sign-in`, {
       email,
       password,
-    });
+    })
+      .then(onSuccess);
   },
 
   checkUserToken() {
@@ -18,7 +21,8 @@ export default {
       params: {
         token: sessionStorage.getItem('token'),
       },
-    });
+    })
+      .then(onSuccess);
   },
 
   userInfo() {
@@ -28,7 +32,8 @@ export default {
       params: {
         token: sessionStorage.getItem('token'),
       },
-    });
+    })
+      .then(onSuccess);
   },
 
   usersList() {
@@ -38,7 +43,8 @@ export default {
       params: {
         token: sessionStorage.getItem('token'),
       },
-    });
+    })
+      .then(onSuccess);
   },
 
   rolesList() {
@@ -48,7 +54,8 @@ export default {
       params: {
         token: sessionStorage.getItem('token'),
       },
-    });
+    })
+      .then(onSuccess);
   },
 
   createUser({name, email, password, roleId}) {
@@ -62,10 +69,11 @@ export default {
         password,
         roleId,
       },
-    });
+    })
+      .then(onSuccess);
   },
 
-  editUser(id, { name, email, password, roleId }) {
+  editUser(id, {name, email, password, roleId}) {
     return axios({
       method: 'post',
       url: `${apiPrefix}/api/user/update`,
@@ -77,7 +85,8 @@ export default {
         password,
         roleId,
       },
-    });
+    })
+      .then(onSuccess);
   },
 
   removeUser(id) {
@@ -88,10 +97,11 @@ export default {
         token: sessionStorage.getItem('token'),
         id,
       },
-    });
+    })
+      .then(onSuccess);
   },
 
-  createBusStop({ name, address, location }) {
+  createBusStop({name, address, location}) {
     return axios({
       method: 'post',
       url: `${apiPrefix}/api/stop/create`,
@@ -101,78 +111,8 @@ export default {
         address,
         location,
       },
-    });
+    })
+      .then(onSuccess);
   },
-
-
-  // createPhotos(filesObj, type, photosessionId) {
-  //   return new Promise((resolve, reject) => {
-  //     const req = request.post(`${apiPrefix}/upload`);
-  //     req.query({type, photosessionId});
-  //
-  //     const files = Object.keys(filesObj);
-  //
-  //     files.forEach(fileName => {
-  //       req.attach(fileName, filesObj[fileName]);//Create random name for each file
-  //     });
-  //
-  //     req.end((err, res) => {
-  //       if (err) {
-  //         reject(new Error(err));
-  //       }
-  //
-  //       resolve(res);
-  //     });
-  //   });
-  // },
-  //
-  // deletePhotos(photoId) {
-  //   return axios.delete(`${apiPrefix}/photo/${photoId}`);
-  // },
-  //
-  //
-  // listPhotos() {
-  //   return request.get(`${apiPrefix}/get/all`);
-  // },
-  //
-  // weddingPhotos() {
-  //   return request.get(`${apiPrefix}/get/wedding`);
-  // },
-  //
-  // lovestoryPhotos() {
-  //   return request.get(`${apiPrefix}/get/lovestory`);
-  // },
-  //
-  // childrenPhotos() {
-  //   return request.get(`${apiPrefix}/get/children`);
-  // },
-  //
-  //
-  // createPhotosession(photoName, description) {
-  //   return new Promise((resolve, reject) => {
-  //     const req = request.post(`${apiPrefix}/photosession`);
-  //
-  //     req.query({cover: `images/${photoName}.jpg`, description});
-  //     req.end((err, res) => {
-  //       if (err) {
-  //         reject(new Error(err));
-  //       }
-  //
-  //       resolve(res);
-  //     });
-  //   });
-  // },
-  //
-  // photosession() {
-  //   return request.get(`${apiPrefix}/get/photosession`);
-  // },
-  //
-  // photosessionPhotos(id) {
-  //   return request.get(`${apiPrefix}/get/photosession/${id}`);
-  // },
-  //
-  // deletePhotosession(id) {
-  //   return axios.delete(`${apiPrefix}/photosession/${id}`);
-  // },
 
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {} from 'react-materialize';
 import {usersList, createUser, removeUser, editUser} from '../../../api/index';
-import checkAuthorized from '../../../utils/userUtils';
+import {onError} from '../../../utils/handleResponse';
 
 import Spinner from '../../../components/spiner/Spinner';
 import User from './User';
@@ -48,7 +48,7 @@ class Users extends React.Component {
         .then(console.log.bind(console))
         .then(this.getUsers)
         .then(closeModal(id))
-        .catch(checkAuthorized.bind(this, push));
+        .catch(onError);
     };
   }
 
@@ -58,7 +58,7 @@ class Users extends React.Component {
     // Get all users
     usersList()
       .then(res => this.setState({users: res.data}))
-      .catch(checkAuthorized.bind(this, push));
+      .catch(onError);
   }
 
   setEmptyUsers() {
@@ -72,7 +72,7 @@ class Users extends React.Component {
       .then(console.log.bind(console))
       .then(closeModal())
       .then(this.getUsers)
-      .catch(checkAuthorized.bind(this, push));
+      .catch(onError);
   }
 
   onEdit(userId) {
@@ -83,7 +83,7 @@ class Users extends React.Component {
         .then(console.log.bind(console))
         .then(closeModal(`Edit${userId}`))
         .then(this.getUsers)
-        .catch(checkAuthorized.bind(this, push));
+        .catch(onError);
     }
   }
 

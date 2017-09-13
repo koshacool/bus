@@ -11,14 +11,14 @@ const OperatorHeader = ({ logout }) => (
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right" href='/admin/users'>
-      <Link to="/certificate">Certificate</Link>
+      <Link to="/operator/certificate">Certificate</Link>
     </NavItem>
 
     <NavItem className="grey-text text-darken-4 right">
       <Link to="/operator/video">Video</Link>
     </NavItem>
     <NavItem className="grey-text text-darken-4 right">
-      <Link to="/keys">Hot KEYS</Link>
+      <Link to="/operator/keys">Hot KEYS</Link>
     </NavItem>
   </div>
 );
