@@ -61,6 +61,7 @@ class AppLayout extends React.Component {
 
     this.checkAuthRoutes = this.checkAuthRoutes.bind(this);
     this.logout = this.logout.bind(this);
+    this.saveDataToSessionStorage = this.saveDataToSessionStorage.bind(this);
   }
 
 
@@ -78,6 +79,7 @@ class AppLayout extends React.Component {
 
     sessionStorage.setItem('token', null);
     sessionStorage.setItem('role', null);
+    sessionStorage.setItem('hotKeys', null);
 
     this.setState({
       isLogged: false,
@@ -112,12 +114,10 @@ class AppLayout extends React.Component {
         if (res.data.status === 'error') {
           onError(res);
           this.logout();
-          return;
+          throw new Error(res.data.statusText);
         }
 
-        sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('role', res.data.role.name);
-
+        this.saveDataToSessionStorage(res.data);
         return res;
       })
       .then(res => {
@@ -134,6 +134,12 @@ class AppLayout extends React.Component {
         this.logout();
         onError(e);
       });
+  }
+
+  saveDataToSessionStorage(data) {
+    sessionStorage.setItem('token', data.token);
+    sessionStorage.setItem('role', data.role.name);
+    sessionStorage.setItem('hotKeys', data.hotKeys);
   }
 
   isLoggedIn(token) {

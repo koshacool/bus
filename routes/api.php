@@ -27,8 +27,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('user/remove', 'RegisterController@remove');
     Route::post('user/update', 'RegisterController@update');
 
+    // Update user hotKeys
+    Route::post('hotkeys/edit', 'RegisterController@updateHotKeys');
+
     // Bus stops routes
     Route::post('stop/create', 'BusStopsController@create');
+
+
+
 
 
 });

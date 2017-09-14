@@ -32,7 +32,7 @@ class AuthController extends Controller
         $role = $authUser->role()->get();
 
         // All good so return the token
-        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0] ]);
+        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0], 'hotKeys' => $authUser->hot_keys ]);
     }
 
     public function refresh()
@@ -53,7 +53,7 @@ class AuthController extends Controller
         $authUser = JWTAuth::toUser($token);
         $role = $authUser->role()->get();
 
-        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0] ]);
+        return response()->json([ 'status' => 'ok', 'token' => $token, 'role' => $role[0], 'hotKeys' => $authUser->hot_keys ]);
     }
 
     public function profile()

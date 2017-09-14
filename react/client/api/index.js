@@ -115,4 +115,16 @@ export default {
       .then(onSuccess);
   },
 
+  updateHotKeys(hotKeys) {
+    return axios({
+      method: 'post',
+      url: `${apiPrefix}/api/hotkeys/edit`,
+      params: {
+        token: sessionStorage.getItem('token'),
+        hotKeys: JSON.stringify(hotKeys),
+      },
+    })
+      .then(onSuccess);
+  },
+
 };

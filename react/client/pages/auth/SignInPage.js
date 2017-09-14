@@ -16,6 +16,7 @@ class SignInPage extends React.Component {
 
     this.authorization = this.authorization.bind(this);
     this.onChangeInput = this.onChangeInput.bind(this);
+    this.saveDataToSessionStorage = this.saveDataToSessionStorage.bind(this);
   }
 
   onChangeInput(field) {
@@ -29,18 +30,20 @@ class SignInPage extends React.Component {
 
     authorization(email, password)
       .then(res => {
-        sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('role', res.data.role.name);
-
+        this.saveDataToSessionStorage(res.data);
         return res;
       })
       .then((res) => {
         setTimeout(router.push(`/${res.data.role.name}`), 100);
       })
       .catch(onError);
-
   }
 
+  saveDataToSessionStorage(data) {
+    sessionStorage.setItem('token', data.token);
+    sessionStorage.setItem('role', data.role.name);
+    sessionStorage.setItem('hotKeys', data.hotKeys);
+  }
 
   render() {
     const {email, password} = this.state;

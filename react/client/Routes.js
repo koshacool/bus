@@ -4,11 +4,13 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import AppLayout from './layouts/AppLayout';
 import SignInPage from './pages/auth/SignInPage';
 
-import Admin from './pages/admin/Admin';
+// Admin components
 import Users from './pages/admin/users/Users';
 import BusStops from './pages/admin/stops/BusStops';
 
+// Operator components
 import Video from './pages/operator/video/Video';
+import Keys from './pages/operator/keys/Keys';
 
 const publicRoutes = ['/sign-in'];
 const commonRoutes = ['/not-found'];
@@ -28,8 +30,9 @@ const renderRoutes = () => (
       </Route>
 
       <Route path="operator">
-        <IndexRoute component={Video} />
+        <IndexRoute component={Keys} />
         <Route path="video" component={Video} />
+        <Route path="keys" component={Keys} />
       </Route>
 
     </Route>

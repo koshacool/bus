@@ -48,12 +48,14 @@ class DatabaseSeeder extends Seeder
                     'email' => "admin@mail.com",
                     'password' => Hash::make('admin'),
                     'role_id' => '1',
+                    'hot_keys' => '',
                 ],
                 [
                     'name' => "operator",
                     'email' => "operator@mail.com",
                     'password' => Hash::make('operator'),
                     'role_id' => '2',
+                    'hot_keys' => '',
                 ],
             ]
         );
