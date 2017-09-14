@@ -1,6 +1,7 @@
 import React from 'react';
 import { defaultKeys } from '../params';
-
+import { updateHotKeys } from '../../../api/index';
+import { onError } from '../../../utils/handleResponse';
 import Key from './Key';
 
 class Keys extends React.Component {
@@ -19,7 +20,10 @@ class Keys extends React.Component {
   }
 
   componentDidMount() {
-    // Get keys from DB
+    const newKeys = this.getKeys();
+    if (newKeys) {
+      this.setState({ hotKeys: newKeys });
+    }
   }
 
   onEdit(actionName, keyCode) {
@@ -39,12 +43,30 @@ class Keys extends React.Component {
       return;
     }
 
-    this.setState({ inEdding: '', actionName: '', hotKeys: this.changeActionKeys(keyCode) });
+    const newKeys = this.changeActionKeys(keyCode);
+
+    updateHotKeys(newKeys)
+      .then(() => this.setState({ inEdding: '', actionName: '', hotKeys: newKeys }))
+      .catch((error) => {
+        this.setState({ inEdding: '', actionName: '' });
+        onError(error);
+      });
+
     document.removeEventListener('keydown', this.onKeydown);
   }
 
+  getKeys() {
+    const keys = sessionStorage.getItem('hotKeys');
+
+    if (keys) {
+      return JSON.parse(keys);
+    }
+
+    return false;
+  }
+
   changeActionKeys(keyCode) {
-    const {hotKeys, inEdding, actionName} = this.state;
+    const { hotKeys, inEdding, actionName } = this.state;
     const actions = Object.keys(hotKeys);
 
     if (keyCode != inEdding) {

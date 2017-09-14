@@ -26,6 +26,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'role_id' => $request->roleId,
             'password' => bcrypt($request->password),
+            'hot_keys' => '',
         ]);
     }
 
@@ -73,10 +74,10 @@ class RegisterController extends Controller
     }
 
     /**
-     * Update  user info after valid registration.
+     * Update  user info after valid auth.
      *
      * @param  Request $request
-     * @return \App\User
+     * @return json
      */
     public function update(Request $request)
     {
@@ -88,12 +89,31 @@ class RegisterController extends Controller
         }
 
         $user = User::find($id);
-        $user->forceFill([
+        $user->fill([
             'password' => bcrypt($request->password),
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => $request->roleId,
         ])->save();
+
+        return response()->json(['status' => 'ok', 'statusText' => 'saved']);
+    }
+
+    /**
+     * Update  user hotKeys after valid auth.
+     *
+     * @param  Request $request
+     *
+     * @return json
+     */
+    public function updateHotKeys(Request $request)
+    {
+        $authUser = JWTAuth::parseToken()->authenticate();
+
+        $user = User::find($authUser->id);
+        $user->hot_keys = $request->hotKeys;
+        $user->save();
+
 
         return response()->json(['status' => 'ok', 'statusText' => 'saved']);
     }

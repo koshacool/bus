@@ -9,9 +9,10 @@ const alertOptions = {
 };
 
 
-const getErrorKey = error => errorKeys.find(key => !!error.data[key]);
+const getErrorKey = error => errorKeys.find(key => error.data && !!error.data[key]);
 
 const getErrorMessage = (error) => {
+
   if (!error) {
     return '';
   }
@@ -22,7 +23,7 @@ const getErrorMessage = (error) => {
     return `${error.status}:${error.statusText}, ${error.data.error} `;
   }
 
-  return (typeof error === 'string' && error) || 'Unspecified error';
+  return (typeof error === 'string' && error) || `Unspecified error! ${error.toString()}`;
 };
 
 
@@ -30,15 +31,15 @@ export const showError = error => {
   // eslint-disable-next-line no-console
   console.log(error);
 
-  const errorMessage = getErrorMessage(error);
-
-  Alert.error(errorMessage, alertOptions);
+  Alert.error(getErrorMessage(error), alertOptions);
 };
 
 
 export const showSuccess = message => {
   console.log(message);
-  Alert.success(`status: ${message.status}, text: ${message.statusText}`, alertOptions);
+  const additionalInfo = message.data.statusText ? message.data.statusText : message.statusText;
+  const text = `status: ${message.status}, text: ${additionalInfo}`;
+  Alert.success(text, alertOptions);
 };
 
 
